@@ -1,8 +1,9 @@
 package com.seasonwell.backend.global.config;
 
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
-
+@Getter
 public enum ResponseStatus {
 
     // --- 4xx Client Error ---

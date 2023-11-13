@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    include: secret
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  level:
+    com.seasonwell.backend: DEBUG
