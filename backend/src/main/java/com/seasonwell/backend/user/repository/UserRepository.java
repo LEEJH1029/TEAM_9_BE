@@ -1,4 +1,4 @@
-package com.seasonwell.backend.user.Repositoy;
+package com.seasonwell.backend.user.repository;
 
 import com.seasonwell.backend.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

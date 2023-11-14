@@ -1,7 +1,7 @@
 package com.seasonwell.backend.user.service;
 
 import com.seasonwell.backend.global.config.BaseException;
-import com.seasonwell.backend.user.Repositoy.UserRepository;
+import com.seasonwell.backend.user.repository.UserRepository;
 import com.seasonwell.backend.user.dto.SignupRequest;
 import com.seasonwell.backend.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
