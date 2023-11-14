@@ -4,10 +4,12 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity(name = "Disease")
-@Setter
 @Getter
+@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-public class DiseaseEntity {
+public class Disease {
 
     // pk) 질병 코드
     @Id
@@ -23,15 +25,15 @@ public class DiseaseEntity {
     private String disease_name;
 
     // 예방 방법
-    @Column(length = 100, nullable = false)
+    @Column(length = 2000, nullable = false)
     private String disease_protect;
 
     // 치료법
-    @Column(length = 100, nullable = false)
+    @Column(length = 2000, nullable = false)
     private String disease_cure;
 
     // 증상
-    @Column(length = 100, nullable = false)
+    @Column(length = 2000, nullable = false)
     private String disease_symptom;
 
 }
