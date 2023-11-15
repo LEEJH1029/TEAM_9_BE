@@ -15,10 +15,10 @@ import javax.persistence.Id;
 @Getter
 @Setter
 public class UserEntity {
-    // pk) 아이디
+    // pk) 아이디. camelCase 사용
     @Id
     @Column(length = 20, nullable = false)
-    private String user_id;
+    private String userId;
 
     // fk) 질병 코드
     @Column(length = 100)

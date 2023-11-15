@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -34,11 +36,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public BaseResponse<String> login(@RequestBody UserLoginRequest dto) {
+    public BaseResponse<String> login(@RequestBody UserLoginRequest dto, HttpSession session) {
         try {
-            userService.login(dto.getUser_id(), dto.getUser_pw());
-            log.info(dto.getUser_id());
-            log.info(dto.getUser_pw());
+            userService.loginUser(dto.getUser_id(), dto.getUser_pw());
+            session.setAttribute("userId", dto.getUser_id());
             String result = "로그인 완료";
             return new BaseResponse<>(result);
         } catch (BaseException e) {
