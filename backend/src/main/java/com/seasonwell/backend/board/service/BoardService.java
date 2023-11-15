@@ -6,6 +6,7 @@ import com.seasonwell.backend.board.dto.BoardRequest;
 import com.seasonwell.backend.board.dto.OneBoardResponse;
 import com.seasonwell.backend.board.entity.BoardEntity;
 import com.seasonwell.backend.board.repository.BoardRepository;
+import com.seasonwell.backend.global.config.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class BoardService {
             }
             return responseDtoList;
         } catch (Exception e) {
-//            throw new ResponseStatus;
+//            throw new ResponseStatus.BAD_REQUEST;
         }
         return null;
     }
