@@ -2,6 +2,7 @@ package com.seasonwell.backend.user.controller;
 
 import com.seasonwell.backend.global.config.BaseException;
 import com.seasonwell.backend.global.config.BaseResponse;
+import com.seasonwell.backend.global.config.ResponseStatus;
 import com.seasonwell.backend.user.dto.SignupRequest;
 import com.seasonwell.backend.user.dto.UserLoginRequest;
 import com.seasonwell.backend.user.service.UserService;
@@ -44,7 +45,7 @@ public class UserController {
             return new BaseResponse<>(result);
         } catch (BaseException e) {
             log.info("로그인 실패");
-            return new BaseResponse<>(e.getStatus());
+            return new BaseResponse<>(ResponseStatus.NO_USER);
         }
     }
 }
