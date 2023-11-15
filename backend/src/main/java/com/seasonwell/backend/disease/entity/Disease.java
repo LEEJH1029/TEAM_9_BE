@@ -1,39 +1,37 @@
 package com.seasonwell.backend.disease.entity;
 
-import lombok.*;
-import javax.persistence.*;
+import lombok.Getter;
 
-@Entity(name = "Disease")
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 @Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class Disease {
 
-    // pk) 질병 코드
     @Id
-    @Column(length = 20, nullable = false)
     private String disease_code;
 
-    // 계절
-    @Column(length = 20, nullable = false)
     private String disease_season;
 
-    // 질병명
-    @Column(length = 100, nullable = false)
     private String disease_name;
 
-    // 예방 방법
-    @Column(length = 2000, nullable = false)
     private String disease_protect;
 
-    // 치료법
-    @Column(length = 2000, nullable = false)
     private String disease_cure;
 
-    // 증상
-    @Column(length = 2000, nullable = false)
     private String disease_symptom;
 
+    public Disease() {
+    }
+
+    public Disease(String disease_code, String disease_season, String disease_name, String disease_protect, String disease_cure, String disease_symptom) {
+        this.disease_code = disease_code;
+        this.disease_season = disease_season;
+        this.disease_name = disease_name;
+        this.disease_protect = disease_protect;
+        this.disease_cure = disease_cure;
+        this.disease_symptom = disease_symptom;
+    }
 }
+
