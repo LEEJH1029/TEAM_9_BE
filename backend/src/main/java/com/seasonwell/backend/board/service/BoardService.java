@@ -30,10 +30,9 @@ public class BoardService {
     }
 
     // 모든 게시글 가져오기
-    public List<AllBoardResponse> findAllBoard() {
+    public List<AllBoardResponse> findAllBoard(Integer board_type) {
         try{
-            List<BoardEntity> boardList = boardRepository.findAll();
-
+            List<BoardEntity> boardList = boardRepository.findAllByBoardType(board_type);
             List<AllBoardResponse> responseDtoList = new ArrayList<>();
 
             for (BoardEntity board : boardList) {
@@ -49,10 +48,8 @@ public class BoardService {
     }
 
     // 게시글 하나 가져오기
-    public OneBoardResponse findOneBoard(Long id) {
-        BoardEntity board = boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("조회 실패")
-        );
+    public OneBoardResponse findOneBoard(Integer boardType, Long id) {
+        BoardEntity board = boardRepository.findByBoardTypeAndBoardNo(boardType, id);
         return new OneBoardResponse(board);
     }
 }

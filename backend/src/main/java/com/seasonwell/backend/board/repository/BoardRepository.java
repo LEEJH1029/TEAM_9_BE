@@ -8,5 +8,10 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     List<BoardEntity> findAll();
-    Optional<BoardEntity> findByBoardNo(Long boardId);
+    List<BoardEntity> findAllByBoardType(Integer boardType);
+
+    BoardEntity findByBoardTypeAndBoardNo(Integer boardType, Long boardNo);
+
+
+    //    Optional<BoardEntity> findByBoardNo(Long boardNo);
 }
