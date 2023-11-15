@@ -19,14 +19,14 @@ public class CommentService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public List<CommentEntity> getAllComments(Long id) {
-        BoardEntity board = boardRepository.findByBoardNo(id).get();
+    public List<CommentEntity> getAllComments(Integer board_type, Long id) {
+        BoardEntity board = boardRepository.findByBoardTypeAndBoardNo(board_type, id);
         return commentRepository.findCommentEntitiesByBoard(board);
     }
 
     @Transactional
-    public void commentWrite(CommentRequest commentRequest, HttpSession session, Long id) {
-        BoardEntity board = boardRepository.findByBoardNo(id).orElseThrow(()->new IllegalArgumentException("조회 실패"));
+    public void commentWrite(CommentRequest commentRequest, HttpSession session, Integer board_type, Long id) {
+        BoardEntity board = boardRepository.findByBoardTypeAndBoardNo(board_type, id);
         CommentEntity comment = new CommentEntity(commentRequest, board);
         comment.setComment_author((String) session.getAttribute("userId"));
         commentRepository.save(comment);

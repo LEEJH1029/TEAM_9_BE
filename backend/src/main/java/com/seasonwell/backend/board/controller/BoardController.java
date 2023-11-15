@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api")
+@RequestMapping("/api/community")
 @RestController
 public class BoardController {
     private final BoardService boardService;
@@ -19,7 +19,7 @@ public class BoardController {
     }
 
     // 글 등록
-    @PostMapping("/community/write")
+    @PostMapping("/write")
     public BaseResponse<String> createBoard(@RequestBody BoardRequest requestDto) {
         boardService.createBoard(requestDto);
         String result = "게시글 생성 완료";
@@ -27,16 +27,20 @@ public class BoardController {
     }
 
     // 전체 목록 조회
-    @GetMapping("/community")
-    public BaseResponse<List<AllBoardResponse>> getAllBoards() {
-        List<AllBoardResponse> allBoardResponses = boardService.findAllBoard();
+    @GetMapping("/{board_type}")
+    public BaseResponse<List<AllBoardResponse>> getAllBoards(@PathVariable Integer board_type) {
+        List<AllBoardResponse> allBoardResponses = boardService.findAllBoard(board_type);
         return new BaseResponse<>(allBoardResponses);
     }
 
     // 글 하나 조회
-    @GetMapping("/community/{board_id}")
-    public BaseResponse<OneBoardResponse> getOneBoard(@PathVariable Long board_id) {
-        OneBoardResponse oneBoardResponse = boardService.findOneBoard(board_id);
+    @GetMapping("/{board_type}/{board_no}")
+
+    public BaseResponse<OneBoardResponse> getOneBoard(
+            @PathVariable Integer board_type,
+            @PathVariable Long board_no
+    ) {
+        OneBoardResponse oneBoardResponse = boardService.findOneBoard(board_type, board_no);
         return new BaseResponse<>(oneBoardResponse);
     }
 }

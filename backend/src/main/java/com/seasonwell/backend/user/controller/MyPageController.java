@@ -4,13 +4,12 @@ import com.seasonwell.backend.global.config.BaseException;
 import com.seasonwell.backend.global.config.BaseResponse;
 import com.seasonwell.backend.global.config.ResponseStatus;
 import com.seasonwell.backend.user.dto.MyPageResponse;
+import com.seasonwell.backend.user.dto.UpdateUserRequest;
 import com.seasonwell.backend.user.entity.UserEntity;
 import com.seasonwell.backend.user.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,6 +28,20 @@ public class MyPageController {
             log.info(userId);
 
             return new BaseResponse<>(new MyPageResponse(currentUser));
+        } catch (BaseException e) {
+            return new BaseResponse<>(ResponseStatus.INVALID_AUTH);
+        }
+    }
+
+    @PutMapping("/userinfo/update")
+    public BaseResponse<String> updateInfo(
+            @RequestBody UpdateUserRequest updateUserRequest,
+            HttpSession session
+    ) {
+        try {
+            mypageService.updateUser(updateUserRequest, session);
+            String result = "회원정보 변경 완료";
+            return new BaseResponse<>(result);
         } catch (BaseException e) {
             return new BaseResponse<>(ResponseStatus.INVALID_AUTH);
         }

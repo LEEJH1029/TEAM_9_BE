@@ -16,16 +16,23 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
 
-
-    @GetMapping("/{board_id}/comment")
-    public BaseResponse<List<CommentEntity>> getAllComments(@PathVariable Long board_id) {
-        List<CommentEntity> allComments = commentService.getAllComments(board_id);
+    @GetMapping("/{board_type}/{board_no}/comment")
+    public BaseResponse<List<CommentEntity>> getAllComments(
+            @PathVariable Integer board_type,
+            @PathVariable Long board_no
+    ) {
+        List<CommentEntity> allComments = commentService.getAllComments(board_type, board_no);
         return new BaseResponse<>(allComments);
     }
 
-    @PostMapping("/{board_id}/comment/write")
-    public BaseResponse<String> writeComment(@RequestBody CommentRequest commentRequest, HttpSession session, @PathVariable Long board_id) {
-        commentService.commentWrite(commentRequest, session, board_id);
+    @PostMapping("{board_type}/{board_no}/comment/write")
+    public BaseResponse<String> writeComment(
+            @PathVariable Integer board_type,
+            @PathVariable Long board_no,
+            @RequestBody CommentRequest commentRequest,
+            HttpSession session
+    ) {
+        commentService.commentWrite(commentRequest, session, board_type, board_no);
         String result = "댓글 작성 완료";
         return new BaseResponse<>(result);
     }
