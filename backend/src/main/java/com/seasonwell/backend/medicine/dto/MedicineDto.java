@@ -12,6 +12,8 @@ public class MedicineDto {
 
     private String disease_code; // fk
 
+    private String disease_name;
+
     private String medicine_code;
 
     private String medicine_name;
