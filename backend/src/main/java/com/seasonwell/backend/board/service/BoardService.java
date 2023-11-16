@@ -58,4 +58,21 @@ public class BoardService {
         BoardEntity board = boardRepository.findByBoardTypeAndBoardNo(boardType, id);
         return new OneBoardResponse(board);
     }
+
+    public List<AllBoardResponse> findAllBoardByBoardTitle(String board_title) {
+        try {
+            List<BoardEntity> boardList = boardRepository.findByBoardTitle(board_title);
+            List<AllBoardResponse> responseDtoList = new ArrayList<>();
+
+            for (BoardEntity board : boardList) {
+                responseDtoList.add(
+                        new AllBoardResponse(board)
+                );
+            }
+            return responseDtoList;
+        } catch (Exception e) {
+//            throw new ResponseStatus.BAD_REQUEST;
+        }
+        return null;
+    }
 }

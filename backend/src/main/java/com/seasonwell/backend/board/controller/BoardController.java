@@ -48,4 +48,12 @@ public class BoardController {
         OneBoardResponse oneBoardResponse = boardService.findOneBoard(board_type, board_no);
         return new BaseResponse<>(oneBoardResponse);
     }
+
+    @GetMapping("/search/{board_title}")
+public BaseResponse<List<AllBoardResponse>> getAllBoardByBoardTitle(
+        @PathVariable String board_title
+    ) {
+        List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardTitle(board_title);
+        return new BaseResponse<>(allBoardResponses);
+    }
 }
