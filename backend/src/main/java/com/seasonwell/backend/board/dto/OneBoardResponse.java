@@ -1,6 +1,6 @@
 package com.seasonwell.backend.board.dto;
 
-import com.seasonwell.backend.board.entity.BoardEntity;
+import com.seasonwell.backend.board.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +22,7 @@ public class OneBoardResponse {
     private String board_content;
     private String disease_code;
 
-    public OneBoardResponse(BoardEntity board) {
+    public OneBoardResponse(Board board) {
         this.board_no = board.getBoardNo();
         this.board_title = board.getBoardTitle();
         this.board_author = board.getBoardAuthor();

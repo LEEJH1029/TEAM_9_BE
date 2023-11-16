@@ -1,9 +1,10 @@
 package com.seasonwell.backend.board.controller;
 
 import com.seasonwell.backend.board.dto.CommentRequest;
-import com.seasonwell.backend.board.entity.CommentEntity;
+import com.seasonwell.backend.board.dto.CommentResponse;
 import com.seasonwell.backend.board.service.CommentService;
 import com.seasonwell.backend.global.config.BaseResponse;
+import com.seasonwell.backend.global.config.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +18,11 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/{board_type}/{board_no}/comment")
-    public BaseResponse<List<CommentEntity>> getAllComments(
+    public BaseResponse<List<CommentResponse>> getAllComments(
             @PathVariable Integer board_type,
             @PathVariable Long board_no
     ) {
-        List<CommentEntity> allComments = commentService.getAllComments(board_type, board_no);
+        List<CommentResponse> allComments = commentService.getAllComments(board_type, board_no);
         return new BaseResponse<>(allComments);
     }
 
@@ -32,8 +33,12 @@ public class CommentController {
             @RequestBody CommentRequest commentRequest,
             HttpSession session
     ) {
-        commentService.commentWrite(commentRequest, session, board_type, board_no);
-        String result = "댓글 작성 완료";
-        return new BaseResponse<>(result);
+        String user = commentService.commentWrite(commentRequest, session, board_type, board_no);
+        if(user != null) {
+            String result = "댓글 작성 완료";
+            return new BaseResponse<>(result);
+        } else {
+            return new BaseResponse<>(ResponseStatus.BAD_REQUEST);
+        }
     }
 }

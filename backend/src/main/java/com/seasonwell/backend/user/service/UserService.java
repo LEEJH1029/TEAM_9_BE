@@ -4,7 +4,7 @@ import com.seasonwell.backend.global.config.BaseException;
 import com.seasonwell.backend.global.config.ResponseStatus;
 import com.seasonwell.backend.user.repository.UserRepository;
 import com.seasonwell.backend.user.dto.SignupRequest;
-import com.seasonwell.backend.user.entity.UserEntity;
+import com.seasonwell.backend.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class UserService {
             throw new BaseException(ResponseStatus.BAD_REQUEST);
         }
 
-        UserEntity user = new UserEntity();
+        User user = new User();
         user.setUserId(userid);
         user.setUser_name(signupRequest.getUser_name());
         user.setUser_pw(signupRequest.getUser_pw());
