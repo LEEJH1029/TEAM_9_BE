@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +22,22 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     // 게시글 생성
-    public void createBoard(BoardRequest boardRequest) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+    public String createBoard(BoardRequest boardRequest, HttpSession session) {
         BoardEntity board = new BoardEntity(boardRequest);
-//        board.setBoardAuthor(authentication.getName());
-        boardRepository.save(board);
+        String currentUser = (String) session.getAttribute("userId");
+
+        if (currentUser == null) {
+            return null;
+        } else {
+            board.setBoardAuthor(currentUser);
+            boardRepository.save(board);
+            return currentUser;
+        }
     }
 
     // 모든 게시글 가져오기
     public List<AllBoardResponse> findAllBoard(Integer board_type) {
-        try{
+        try {
             List<BoardEntity> boardList = boardRepository.findAllByBoardType(board_type);
             List<AllBoardResponse> responseDtoList = new ArrayList<>();
 

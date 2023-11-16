@@ -5,8 +5,10 @@ import com.seasonwell.backend.board.dto.AllBoardResponse;
 import com.seasonwell.backend.board.dto.OneBoardResponse;
 import com.seasonwell.backend.board.service.BoardService;
 import com.seasonwell.backend.global.config.BaseResponse;
+import com.seasonwell.backend.global.config.ResponseStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequestMapping("/api/community")
@@ -20,10 +22,14 @@ public class BoardController {
 
     // 글 등록
     @PostMapping("/write")
-    public BaseResponse<String> createBoard(@RequestBody BoardRequest requestDto) {
-        boardService.createBoard(requestDto);
-        String result = "게시글 생성 완료";
-        return new BaseResponse<>(result);
+    public BaseResponse<String> createBoard(@RequestBody BoardRequest requestDto, HttpSession session) {
+        String user = boardService.createBoard(requestDto, session);
+        if (user != null) {
+            String result = "게시글 생성 완료";
+            return new BaseResponse<>(result);
+        } else {
+            return new BaseResponse<>(ResponseStatus.BAD_REQUEST);
+        }
     }
 
     // 전체 목록 조회
@@ -35,7 +41,6 @@ public class BoardController {
 
     // 글 하나 조회
     @GetMapping("/{board_type}/{board_no}")
-
     public BaseResponse<OneBoardResponse> getOneBoard(
             @PathVariable Integer board_type,
             @PathVariable Long board_no
