@@ -5,7 +5,7 @@ import com.seasonwell.backend.global.config.BaseResponse;
 import com.seasonwell.backend.global.config.ResponseStatus;
 import com.seasonwell.backend.user.dto.MyPageResponse;
 import com.seasonwell.backend.user.dto.UpdateUserRequest;
-import com.seasonwell.backend.user.entity.UserEntity;
+import com.seasonwell.backend.user.entity.User;
 import com.seasonwell.backend.user.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class MyPageController {
     public BaseResponse<MyPageResponse> memberInfo(HttpSession session) {
         try {
             String userId = (String) session.getAttribute("userId");
-            UserEntity currentUser = mypageService.loadMemberByUsername(userId);
+            User currentUser = mypageService.loadMemberByUsername(userId);
             log.info(userId);
 
             return new BaseResponse<>(new MyPageResponse(currentUser));

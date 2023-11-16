@@ -1,6 +1,5 @@
 package com.seasonwell.backend.board.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.seasonwell.backend.board.dto.BoardRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,15 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "Board")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class BoardEntity extends Timestamped{
+public class Board extends BoardTime {
     // pk) 아이디
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +42,7 @@ public class BoardEntity extends Timestamped{
     private Integer boardType;
 
 
-    public BoardEntity(BoardRequest boardRequest) {
+    public Board(BoardRequest boardRequest) {
         this.diseaseCode = boardRequest.getDisease_code();
         this.boardTitle = boardRequest.getBoard_title();
         this.boardContent = boardRequest.getBoard_content();

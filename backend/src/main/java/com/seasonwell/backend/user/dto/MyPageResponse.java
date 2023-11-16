@@ -1,6 +1,6 @@
 package com.seasonwell.backend.user.dto;
 
-import com.seasonwell.backend.user.entity.UserEntity;
+import com.seasonwell.backend.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +22,7 @@ public class MyPageResponse {
     private Integer user_age;
     private Boolean user_gender;
 
-    public MyPageResponse(UserEntity user) {
+    public MyPageResponse(User user) {
         this.userId = user.getUserId();
         this.disease_code = user.getDisease_code();
         this.user_name = user.getUser_name();
