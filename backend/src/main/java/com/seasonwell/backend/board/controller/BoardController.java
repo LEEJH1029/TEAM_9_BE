@@ -55,7 +55,6 @@ public class BoardController {
             @PathVariable Integer board_type,
             @PathVariable String board_title
     ) {
-//        List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardTypeAndBoardTitle(board_type, board_title);
         List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardTitle(board_title);
         List<AllBoardResponse> filterResponses = new ArrayList<>();
 
