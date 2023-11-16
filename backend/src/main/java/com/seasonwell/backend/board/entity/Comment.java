@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity(name = "Comment")
-public class Comment {
+public class Comment extends CommentTime{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long comment_id;
@@ -29,7 +29,6 @@ public class Comment {
 
     public Comment(CommentRequest commentRequest, Board board) {
         this.comment_body = commentRequest.getComment_body();
-//        this.boardId = requestDto.getBoardId();
         this.board = board;
     }
 }

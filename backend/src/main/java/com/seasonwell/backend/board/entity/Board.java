@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Board extends Timestamped{
+public class Board extends BoardTime {
     // pk) 아이디
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

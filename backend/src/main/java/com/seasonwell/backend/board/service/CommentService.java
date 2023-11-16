@@ -36,6 +36,7 @@ public class CommentService {
             commentResponse.setBoard_no(board.getBoardNo());
             commentResponse.setComment_author(comment.getComment_author());
             commentResponse.setComment_body(comment.getComment_body());
+            commentResponse.setComment_date(comment.getCommentDate());
 
             comments.add(commentResponse);
         }
@@ -60,7 +61,6 @@ public class CommentService {
 
         if (authority) {
             Comment comment = new Comment(commentRequest, board);
-
 
             if (userId != null) {
                 comment.setComment_author(userId);
