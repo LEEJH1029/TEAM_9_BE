@@ -9,6 +9,7 @@ import com.seasonwell.backend.global.config.ResponseStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api/community")
@@ -49,11 +50,21 @@ public class BoardController {
         return new BaseResponse<>(oneBoardResponse);
     }
 
-    @GetMapping("/search/{board_title}")
-public BaseResponse<List<AllBoardResponse>> getAllBoardByBoardTitle(
-        @PathVariable String board_title
+    @GetMapping("/search/{board_type}/{board_title}")
+    public BaseResponse<List<AllBoardResponse>> getAllBoardByBoardTitle(
+            @PathVariable Integer board_type,
+            @PathVariable String board_title
     ) {
+//        List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardTypeAndBoardTitle(board_type, board_title);
         List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardTitle(board_title);
-        return new BaseResponse<>(allBoardResponses);
+        List<AllBoardResponse> filterResponses = new ArrayList<>();
+
+        for(AllBoardResponse allBoardResponse : allBoardResponses) {
+            if(allBoardResponse.getBoard_type().equals(board_type)) {
+                filterResponses.add(allBoardResponse);
+            }
+        }
+
+        return new BaseResponse<>(filterResponses);
     }
 }

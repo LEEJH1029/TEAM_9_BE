@@ -58,6 +58,7 @@ public class BoardService {
         return new OneBoardResponse(board);
     }
 
+    // 게시글 검색
     public List<AllBoardResponse> findAllBoardByBoardTitle(String board_title) {
         try {
             List<Board> boardList = boardRepository.findByBoardTitle(board_title);
