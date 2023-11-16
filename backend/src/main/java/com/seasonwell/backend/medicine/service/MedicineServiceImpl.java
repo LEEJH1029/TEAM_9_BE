@@ -64,6 +64,7 @@ public class MedicineServiceImpl implements MedicineService {
     private MedicineDto convertToDto(Medicine medicineEntity) {
         return MedicineDto.builder()
                 .disease_code(medicineEntity.getDisease().getDisease_code())
+                .disease_name(medicineEntity.getDisease().getDisease_name())
                 .medicine_code(medicineEntity.getMedicine_code())
                 .medicine_name(medicineEntity.getMedicine_name())
                 .medicine_efficacy(medicineEntity.getMedicine_efficacy())
