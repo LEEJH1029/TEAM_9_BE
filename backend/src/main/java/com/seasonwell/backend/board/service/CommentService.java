@@ -2,11 +2,11 @@ package com.seasonwell.backend.board.service;
 
 import com.seasonwell.backend.board.dto.CommentRequest;
 import com.seasonwell.backend.board.dto.CommentResponse;
-import com.seasonwell.backend.board.entity.BoardEntity;
-import com.seasonwell.backend.board.entity.CommentEntity;
+import com.seasonwell.backend.board.entity.Board;
+import com.seasonwell.backend.board.entity.Comment;
 import com.seasonwell.backend.board.repository.BoardRepository;
 import com.seasonwell.backend.board.repository.CommentRepository;
-import com.seasonwell.backend.user.entity.UserEntity;
+import com.seasonwell.backend.user.entity.User;
 import com.seasonwell.backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,12 +26,12 @@ public class CommentService {
 
     @Transactional
     public List<CommentResponse> getAllComments(Integer board_type, Long id) {
-        BoardEntity board = boardRepository.findByBoardTypeAndBoardNo(board_type, id);
-        List<CommentEntity> commentsInfo = commentRepository.findCommentEntitiesByBoard(board);
+        Board board = boardRepository.findByBoardTypeAndBoardNo(board_type, id);
+        List<Comment> commentsInfo = commentRepository.findCommentEntitiesByBoard(board);
 
         List<CommentResponse> comments = new ArrayList<>();
 
-        for (CommentEntity comment : commentsInfo) {
+        for (Comment comment : commentsInfo) {
             CommentResponse commentResponse = new CommentResponse();
             commentResponse.setBoard_no(board.getBoardNo());
             commentResponse.setComment_author(comment.getComment_author());
@@ -45,10 +45,10 @@ public class CommentService {
 
     @Transactional
     public String commentWrite(CommentRequest commentRequest, HttpSession session, Integer board_type, Long id) {
-        BoardEntity board = boardRepository.findByBoardTypeAndBoardNo(board_type, id);
+        Board board = boardRepository.findByBoardTypeAndBoardNo(board_type, id);
         String userId = (String) session.getAttribute("userId");
 
-        Optional<UserEntity> currentUser = userRepository.findByUserId(userId);
+        Optional<User> currentUser = userRepository.findByUserId(userId);
 
         Boolean authority = true;
 
@@ -59,7 +59,7 @@ public class CommentService {
         }
 
         if (authority) {
-            CommentEntity comment = new CommentEntity(commentRequest, board);
+            Comment comment = new Comment(commentRequest, board);
 
 
             if (userId != null) {

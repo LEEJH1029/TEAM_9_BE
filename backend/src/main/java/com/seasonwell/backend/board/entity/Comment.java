@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity(name = "Comment")
-public class CommentEntity {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long comment_id;
@@ -25,9 +25,9 @@ public class CommentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boardNo")
-    private BoardEntity board;
+    private Board board;
 
-    public CommentEntity(CommentRequest commentRequest, BoardEntity board) {
+    public Comment(CommentRequest commentRequest, Board board) {
         this.comment_body = commentRequest.getComment_body();
 //        this.boardId = requestDto.getBoardId();
         this.board = board;

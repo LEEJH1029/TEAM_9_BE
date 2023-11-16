@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserEntity {
+public class User {
     // pk) 아이디. camelCase 사용
     @Id
     @Column(length = 20, nullable = false)
