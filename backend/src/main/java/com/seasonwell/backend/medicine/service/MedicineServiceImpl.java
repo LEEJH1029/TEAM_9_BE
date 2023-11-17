@@ -7,6 +7,7 @@ import com.seasonwell.backend.medicine.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,20 @@ public class MedicineServiceImpl implements MedicineService {
         List<Medicine> medicineEntities = medicineRepository.findAll();
         return convertToDtoList(medicineEntities);
     }
+
+    @Override
+    public List<MedicineDto> getRepresentMedicines() {
+        List<Medicine> medicineEntities = medicineRepository.findAll();
+
+        List<Medicine> selectedMedicines = new ArrayList<>();
+        selectedMedicines.add(medicineEntities.get(1));
+        selectedMedicines.add(medicineEntities.get(4));
+        selectedMedicines.add(medicineEntities.get(9));
+        selectedMedicines.add(medicineEntities.get(15));
+
+        return convertToDtoList(selectedMedicines);
+    }
+
 
     @Override
     public MedicineDto getMedicineByCode(String medicineCode) {

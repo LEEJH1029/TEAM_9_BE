@@ -33,6 +33,25 @@ public class NutrientsService {
         return null;
     }
 
+    public List<NutrientsResponse> getRepresentNutrients() {
+        try {
+            List<Nutrients> nutrientsList = nutrientsRepository.findAll();
+            List<NutrientsResponse> responseDtoList = new ArrayList<>();
+
+            if (nutrientsList.size() >= 4) {
+                nutrientsList = nutrientsList.subList(0, 4);
+            }
+            for (Nutrients nutrients : nutrientsList) {
+                responseDtoList.add(new NutrientsResponse(nutrients));
+            }
+
+            return responseDtoList;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+
     public NutrientsDetailResponse getNutrientsById(Long nutrient_id) {
         Optional<Nutrients> nutrientsOptional = nutrientsRepository.findById(nutrient_id);
 
