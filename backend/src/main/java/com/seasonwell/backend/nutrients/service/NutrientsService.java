@@ -1,5 +1,6 @@
 package com.seasonwell.backend.nutrients.service;
 
+import com.seasonwell.backend.nutrients.dto.NutrientsDetailResponse;
 import com.seasonwell.backend.nutrients.dto.NutrientsResponse;
 import com.seasonwell.backend.nutrients.entity.Nutrients;
 import com.seasonwell.backend.nutrients.repository.NutrientsRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,17 @@ public class NutrientsService {
 //            throw new ResponseStatus.BAD_REQUEST;
         }
         return null;
+    }
+
+    public NutrientsDetailResponse getNutrientsById(Long nutrient_id) {
+        Optional<Nutrients> nutrientsOptional = nutrientsRepository.findById(nutrient_id);
+
+        if (nutrientsOptional.isPresent()) {
+            Nutrients nutrients = nutrientsOptional.get();
+            return new NutrientsDetailResponse(nutrients);
+        } else {
+            return null;
+        }
     }
 
     public List<NutrientsResponse> getPersonalNutrients(String disease_code) {
@@ -57,6 +70,5 @@ public class NutrientsService {
             responses.add(new NutrientsResponse(nutrients));
         }
         return responses;
-
     }
 }
