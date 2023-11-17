@@ -2,13 +2,10 @@ package com.seasonwell.backend.disease.service;
 
 import com.seasonwell.backend.disease.dto.*;
 import com.seasonwell.backend.disease.entity.Disease;
-import com.seasonwell.backend.disease.entity.DiseasePrevention;
 import com.seasonwell.backend.disease.entity.Prevention;
 import com.seasonwell.backend.disease.repository.DiseasePreventionRepository;
 import com.seasonwell.backend.disease.repository.DiseaseRepository;
-import com.seasonwell.backend.global.config.ResponseStatus;
 import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
-import com.seasonwell.backend.medicine.dto.MedicineDto;
 import com.seasonwell.backend.medicine.service.MedicineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,19 +32,19 @@ public class DiseaseServiceImpl implements DiseaseService {
 
 
     @Override
-    public List<DiseaseDto> getAllDiseases() {
+    public List<DiseaseDto> getAllDiseases() { // 전체 질병 출력
         List<Disease> diseaseEntities = diseaseRepository.findAll();
         return convertToDtoList(diseaseEntities);
     }
 
     @Override
-    public List<DiseaseDto> getDiseasesBySeason(String season) {
+    public List<DiseaseDto> getDiseasesBySeason(String season) { // 계절별 질병 출력
         List<Disease> diseaseEntities = diseaseRepository.findByDisease_season(season);
         return convertToDtoList(diseaseEntities);
     }
 
     @Override
-    public List<DiseaseDto> getDiseasesByNameContaining(String keyword) {
+    public List<DiseaseDto> getDiseasesByNameContaining(String keyword) { // 질병 검색 결과 출력
         List<Disease> diseaseEntities = diseaseRepository.findByDiseaseNameContainingIgnoreCase(keyword);
         return convertToDtoList(diseaseEntities);
     }
@@ -63,11 +60,12 @@ public class DiseaseServiceImpl implements DiseaseService {
                 .disease_code(diseaseEntity.getDisease_code())
                 .disease_season(diseaseEntity.getDisease_season())
                 .disease_name(diseaseEntity.getDisease_name())
+                .disease_image(diseaseEntity.getDisease_image())
                 .build();
     }
 
     @Override
-    public List<PreventionResponse> getPreventionByDiseaseCode(String disease_code) {
+    public List<PreventionResponse> getPreventionByDiseaseCode(String disease_code) { // 질병 별 예방방법 출력
         try {
             List<Prevention> preventionList = diseasePreventionRepository.findAllByDiseaseCode(disease_code);
             List<PreventionResponse> preventionResponseList = new ArrayList<>();
@@ -103,6 +101,7 @@ public class DiseaseServiceImpl implements DiseaseService {
                 .disease_protect(convertToProtectDto(preventionResponses,diseaseEntity.getDisease_protect()))
                 .disease_cure(converToCureDto(medicineDtos, diseaseEntity.getDisease_cure()))
                 .disease_symptom(diseaseEntity.getDisease_symptom())
+                .disease_image(diseaseEntity.getDisease_image())
                 .build();
     }
 

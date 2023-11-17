@@ -27,6 +27,8 @@ public class Disease {
 
     private String disease_symptom;
 
+    private String disease_image;
+
     @OneToMany(mappedBy = "disease")
     private List<DiseaseNutrients> diseaseNutrients;
 
@@ -39,13 +41,14 @@ public class Disease {
     public Disease() {
     }
 
-    public Disease(String disease_code, String disease_season, String disease_name, String disease_protect, String disease_cure, String disease_symptom) {
+    public Disease(String disease_code, String disease_season, String disease_name, String disease_protect, String disease_cure, String disease_symptom, String disease_image) {
         this.disease_code = disease_code;
         this.disease_season = disease_season;
         this.disease_name = disease_name;
         this.disease_protect = disease_protect;
         this.disease_cure = disease_cure;
         this.disease_symptom = disease_symptom;
+        this.disease_image = disease_image;
     }
 }
 

@@ -17,4 +17,6 @@ public class DiseaseDto {
 
     private String disease_name;
 
+    private String disease_image;
+
 }
