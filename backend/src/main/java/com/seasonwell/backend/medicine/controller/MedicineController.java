@@ -41,7 +41,6 @@ public class MedicineController {
         }
     }
 
-
     @GetMapping("/search/{medicine_name}") // 검색
     public ResponseEntity<List<MedicineDto>> searchMedicines(@PathVariable String medicine_name) {
         List<MedicineDto> medicinesByKeyword = medicineService.getMedicineByNameContaining(medicine_name);

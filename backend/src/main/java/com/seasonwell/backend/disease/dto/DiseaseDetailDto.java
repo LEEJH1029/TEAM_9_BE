@@ -19,4 +19,6 @@ public class DiseaseDetailDto {
     private DiseaseCureDto disease_cure;
 
     private String disease_symptom;
+
+    private String disease_image;
 }
