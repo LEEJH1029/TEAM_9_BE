@@ -32,6 +32,6 @@ public class Nutrients {
     private String nutrients_efficiency;
 
     // 이미지 url
-    @Column(length = 100)
+    @Column(length = 200)
     private String image_url;
 }
