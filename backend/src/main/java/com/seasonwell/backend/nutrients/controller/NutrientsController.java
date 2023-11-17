@@ -30,9 +30,9 @@ public class NutrientsController {
         }
     }
     @GetMapping("/representation") // 대표 4개
-    public BaseResponse<List<NutrientsResponse>> getRepresentNutrients() {
+    public ResponseEntity<List<NutrientsResponse>> getRepresentNutrients() {
         List<NutrientsResponse> allNutrientsResponses = nutrientsService.getRepresentNutrients();
-        return new BaseResponse<>(allNutrientsResponses);
+        return new ResponseEntity<>(allNutrientsResponses, HttpStatus.OK);
     }
 
     @GetMapping("/{nutrients_Id}")
