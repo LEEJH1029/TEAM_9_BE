@@ -6,6 +6,8 @@ import com.seasonwell.backend.board.dto.BoardRequest;
 import com.seasonwell.backend.board.dto.OneBoardResponse;
 import com.seasonwell.backend.board.entity.Board;
 import com.seasonwell.backend.board.repository.BoardRepository;
+import com.seasonwell.backend.disease.entity.Disease;
+import com.seasonwell.backend.disease.repository.DiseaseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,15 +21,19 @@ import java.util.List;
 @Slf4j
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final DiseaseRepository diseaseRepository;
 
     // 게시글 생성
     public String createBoard(BoardRequest boardRequest, HttpSession session) {
-        Board board = new Board(boardRequest);
+//        Board board = new Board(boardRequest);
         String currentUser = (String) session.getAttribute("userId");
 
         if (currentUser == null) {
             return null;
         } else {
+            Disease disease = getOrCreateDisease(boardRequest.getDisease_code());
+
+            Board board = new Board(boardRequest, disease);
             board.setBoardAuthor(currentUser);
             boardRepository.save(board);
             return currentUser;
@@ -74,5 +80,9 @@ public class BoardService {
 //            throw new ResponseStatus.BAD_REQUEST;
         }
         return null;
+    }
+
+    private Disease getOrCreateDisease(String diseaseCode) {
+        return diseaseRepository.findByDisease_code(diseaseCode);
     }
 }

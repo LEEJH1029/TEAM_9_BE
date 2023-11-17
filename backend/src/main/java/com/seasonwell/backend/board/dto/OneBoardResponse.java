@@ -29,6 +29,6 @@ public class OneBoardResponse {
         this.board_date = board.getBoardDate();
         this.board_type = board.getBoardType();
         this.board_content = board.getBoardContent();
-        this.disease_code = board.getDiseaseCode();
+        this.disease_code = board.getDisease().getDisease_code();
     }
 }

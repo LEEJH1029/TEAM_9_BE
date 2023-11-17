@@ -1,6 +1,7 @@
 package com.seasonwell.backend.board.entity;
 
 import com.seasonwell.backend.board.dto.BoardRequest;
+import com.seasonwell.backend.disease.entity.Disease;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,11 @@ public class Board extends BoardTime {
     private Long boardNo;
 
     // fk) 질병 코드
-    @Column(length = 100, nullable = false)
-    private String diseaseCode;
+//    @Column(length = 100, nullable = false)
+//    private String diseaseCode;
+    @OneToOne
+    @JoinColumn(name = "disease_code", nullable = false)
+    private Disease disease;
 
     // 제목
     @Column(length = 20, nullable = false)
@@ -42,11 +46,10 @@ public class Board extends BoardTime {
     private Integer boardType;
 
 
-    public Board(BoardRequest boardRequest) {
-        this.diseaseCode = boardRequest.getDisease_code();
+    public Board(BoardRequest boardRequest, Disease disease) {
+        this.disease = disease;
         this.boardTitle = boardRequest.getBoard_title();
         this.boardContent = boardRequest.getBoard_content();
         this.boardType = boardRequest.getBoard_type();
     }
-
 }

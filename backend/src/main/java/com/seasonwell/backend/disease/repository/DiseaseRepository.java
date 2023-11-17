@@ -17,6 +17,9 @@ public interface DiseaseRepository extends JpaRepository<Disease, String> {
 
     @Query("SELECT d FROM Disease d WHERE lower(d.disease_name) LIKE lower(concat('%', :keyword, '%'))")
     List<Disease> findByDiseaseNameContainingIgnoreCase(@Param("keyword") String keyword);
+
+    @Query("SELECT d FROM Disease d WHERE d.disease_code = :code")
+    Disease findByDisease_code(@Param("code") String code);
 }
 
 
