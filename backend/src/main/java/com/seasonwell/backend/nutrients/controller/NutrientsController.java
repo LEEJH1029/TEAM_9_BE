@@ -1,6 +1,8 @@
 package com.seasonwell.backend.nutrients.controller;
 
 import com.seasonwell.backend.global.config.BaseResponse;
+import com.seasonwell.backend.global.config.ResponseStatus;
+import com.seasonwell.backend.nutrients.dto.NutrientsDetailResponse;
 import com.seasonwell.backend.nutrients.dto.NutrientsResponse;
 import com.seasonwell.backend.nutrients.service.NutrientsService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +20,24 @@ public class NutrientsController {
         this.nutrientsService = nutrientsService;
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public BaseResponse<List<NutrientsResponse>> getAllNutrients() {
         List<NutrientsResponse> allNutrientsResponses = nutrientsService.getAllNutrients();
         return new BaseResponse<>(allNutrientsResponses);
     }
 
-    @GetMapping("/personal/{disease_code}")
+    @GetMapping("/{nutrients_Id}")
+    public BaseResponse<NutrientsDetailResponse> getNutrientById(@PathVariable Long nutrients_Id) {
+        NutrientsDetailResponse nutrientsDetailResponse = nutrientsService.getNutrientsById(nutrients_Id);
+
+        if (nutrientsDetailResponse != null) {
+            return new BaseResponse<>(nutrientsDetailResponse);
+        } else {
+            return new BaseResponse<>(ResponseStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/search/{disease_code}")
     public BaseResponse<List<NutrientsResponse>> getPersonalNutrients(@PathVariable String disease_code) {
         List<NutrientsResponse> nutrientsResponses = nutrientsService.getPersonalNutrients(disease_code);
         return new BaseResponse<>(nutrientsResponses);
