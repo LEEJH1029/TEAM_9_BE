@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface MedicineService {
     List<MedicineDto> getAllMedicines();
+    List<MedicineDto> getRepresentMedicines();
 
     MedicineDto getMedicineByCode(String medicineCode);
 

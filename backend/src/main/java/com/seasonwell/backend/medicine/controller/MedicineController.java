@@ -25,6 +25,12 @@ public class MedicineController {
         return new ResponseEntity<>(allMedicines, HttpStatus.OK);
     }
 
+    @GetMapping("/representation") // 대표 4개
+    public ResponseEntity<List<MedicineDto>> getRepresentMedicines() {
+        List<MedicineDto> allMedicines = medicineService.getRepresentMedicines();
+        return new ResponseEntity<>(allMedicines, HttpStatus.OK);
+    }
+
     @GetMapping("/{medicine_code}") // detail
     public ResponseEntity<MedicineDto> getMedicineByCode(@PathVariable String medicine_code) {
         MedicineDto medicineDto = medicineService.getMedicineByCode(medicine_code);
@@ -34,6 +40,7 @@ public class MedicineController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     @GetMapping("/search/{medicine_name}") // 검색
     public ResponseEntity<List<MedicineDto>> searchMedicines(@PathVariable String medicine_name) {
