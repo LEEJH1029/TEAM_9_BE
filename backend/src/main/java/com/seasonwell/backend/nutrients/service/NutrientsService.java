@@ -1,5 +1,6 @@
 package com.seasonwell.backend.nutrients.service;
 
+import com.seasonwell.backend.nutrients.dto.NutrientsDetailResponse;
 import com.seasonwell.backend.nutrients.dto.NutrientsResponse;
 import com.seasonwell.backend.nutrients.entity.Nutrients;
 import com.seasonwell.backend.nutrients.repository.NutrientsRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,12 +33,23 @@ public class NutrientsService {
         return null;
     }
 
+    public NutrientsDetailResponse getNutrientsById(Long nutrient_id) {
+        Optional<Nutrients> nutrientsOptional = nutrientsRepository.findById(nutrient_id);
+
+        if (nutrientsOptional.isPresent()) {
+            Nutrients nutrients = nutrientsOptional.get();
+            return new NutrientsDetailResponse(nutrients);
+        } else {
+            return null;
+        }
+    }
+
     public List<NutrientsResponse> getPersonalNutrients(String disease_code) {
-        try{
+        try {
             List<Nutrients> nutrientsList = nutrientsRepository.findAllByDiseaseCode(disease_code);
             List<NutrientsResponse> responses = new ArrayList<>();
 
-            for(Nutrients nutrients: nutrientsList) {
+            for (Nutrients nutrients : nutrientsList) {
                 responses.add(new NutrientsResponse(nutrients));
             }
             return responses;
@@ -44,5 +57,18 @@ public class NutrientsService {
 //            throw
         }
         return null;
+    }
+
+
+    public List<NutrientsResponse> getRecommendedNutrients(String disease1, String disease2, String disease3, String disease4, String disease5) {
+        List<String> diseaseCodes = List.of(disease1, disease2, disease3, disease4, disease5);
+
+        List<Nutrients> recommendedNutrients = nutrientsRepository.findByDiseaseCodeIn(diseaseCodes);
+        List<NutrientsResponse> responses = new ArrayList<>();
+
+        for (Nutrients nutrients : recommendedNutrients) {
+            responses.add(new NutrientsResponse(nutrients));
+        }
+        return responses;
     }
 }

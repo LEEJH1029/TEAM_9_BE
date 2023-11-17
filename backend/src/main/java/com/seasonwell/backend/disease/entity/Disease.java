@@ -1,11 +1,13 @@
 package com.seasonwell.backend.disease.entity;
 
+import com.seasonwell.backend.board.entity.Board;
 import com.seasonwell.backend.nutrients.entity.DiseaseNutrients;
 import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.List;
 
 @Entity
@@ -27,6 +29,12 @@ public class Disease {
 
     @OneToMany(mappedBy = "disease")
     private List<DiseaseNutrients> diseaseNutrients;
+
+    @OneToMany(mappedBy = "disease")
+    private List<DiseasePrevention> diseasePreventions;
+
+    @OneToOne(mappedBy = "disease")
+    private Board board;
 
     public Disease() {
     }

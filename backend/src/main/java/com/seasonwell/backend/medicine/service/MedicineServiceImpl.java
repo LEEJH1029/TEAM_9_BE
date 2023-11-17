@@ -1,5 +1,6 @@
 package com.seasonwell.backend.medicine.service;
 
+import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
 import com.seasonwell.backend.medicine.dto.MedicineDto;
 import com.seasonwell.backend.medicine.entity.Medicine;
 import com.seasonwell.backend.medicine.repository.MedicineRepository;
@@ -35,12 +36,6 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public List<MedicineDto> getMedicineByName(String name) {
-        List<Medicine> medicineEntities = medicineRepository.findByMedicine_name(name);
-        return convertToDtoList(medicineEntities);
-    }
-
-    @Override
     public List<MedicineDto> getMedicineByNameContaining(String keyword) {
         List<Medicine> medicineEntities = medicineRepository.findByMedicine_nameContainingIgnoreCase(keyword);
         return convertToDtoList(medicineEntities);
@@ -49,9 +44,7 @@ public class MedicineServiceImpl implements MedicineService {
     @Override
     public List<MedicineDto> getRecommendedMedicines(String disease1, String disease2, String disease3, String disease4, String disease5) {
         List<String> diseaseCodes = List.of(disease1, disease2, disease3, disease4, disease5);
-
         List<Medicine> recommendedMedicines = medicineRepository.findByDiseaseCodeIn(diseaseCodes);
-
         return convertToDtoList(recommendedMedicines);
     }
 
@@ -71,6 +64,25 @@ public class MedicineServiceImpl implements MedicineService {
                 .medicine_usage(medicineEntity.getMedicine_usage())
                 .medicine_caution(medicineEntity.getMedicine_caution())
                 .medicine_image(medicineEntity.getMedicine_image())
+                .build();
+    }
+
+    @Override
+    public List<MedicineDiseaseDto> getMedicinesByDiseaseCode(String disease_code) {
+        List<Medicine> medicines = medicineRepository.findByDiseaseCode(disease_code);
+        return converToDtoList2(medicines);
+    }
+
+    private List<MedicineDiseaseDto> converToDtoList2(List<Medicine> medicineEntities) {
+        return medicineEntities.stream()
+                .map(this::convertToDto2)
+                .collect(Collectors.toList());
+    }
+
+    private MedicineDiseaseDto convertToDto2(Medicine medicineEntity) {
+        return MedicineDiseaseDto.builder()
+                .medicine_code(medicineEntity.getMedicine_code())
+                .medicine_name(medicineEntity.getMedicine_name())
                 .build();
     }
 

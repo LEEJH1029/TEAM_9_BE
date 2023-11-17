@@ -1,7 +1,12 @@
 package com.seasonwell.backend.disease.controller;
 
+import com.seasonwell.backend.disease.dto.DiseaseDetailDto;
 import com.seasonwell.backend.disease.dto.DiseaseDto;
+import com.seasonwell.backend.disease.dto.PreventionResponse;
 import com.seasonwell.backend.disease.service.DiseaseService;
+import com.seasonwell.backend.global.config.BaseResponse;
+import com.seasonwell.backend.medicine.dto.MedicineDto;
+import com.seasonwell.backend.medicine.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +34,10 @@ public class DiseaseController {
     }
 
     @GetMapping("/{disease_code}") // detail
-    public ResponseEntity<DiseaseDto> getDiseaseByCode(@PathVariable String disease_code) {
-        DiseaseDto diseaseDto = diseaseService.getDiseaseByCode(disease_code);
-        if (diseaseDto != null) {
-            return new ResponseEntity<>(diseaseDto, HttpStatus.OK);
+    public ResponseEntity<DiseaseDetailDto> getDiseaseByCode(@PathVariable String disease_code) {
+        DiseaseDetailDto diseaseDetailDto = diseaseService.getDiseaseByCode(disease_code);
+        if (diseaseDetailDto != null) {
+            return new ResponseEntity<>(diseaseDetailDto, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -57,6 +62,5 @@ public class DiseaseController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 }
 
