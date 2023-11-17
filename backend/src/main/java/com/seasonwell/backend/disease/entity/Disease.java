@@ -30,8 +30,6 @@ public class Disease {
     @OneToMany(mappedBy = "disease")
     private List<DiseaseNutrients> diseaseNutrients;
 
-    @OneToOne(mappedBy = "disease")
-    private Board board;
 
     public Disease() {
     }

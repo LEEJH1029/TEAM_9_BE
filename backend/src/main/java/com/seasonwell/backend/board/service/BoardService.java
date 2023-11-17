@@ -25,7 +25,6 @@ public class BoardService {
 
     // 게시글 생성
     public String createBoard(BoardRequest boardRequest, HttpSession session) {
-//        Board board = new Board(boardRequest);
         String currentUser = (String) session.getAttribute("userId");
 
         if (currentUser == null) {
@@ -41,7 +40,25 @@ public class BoardService {
     }
 
     // 모든 게시글 가져오기
-    public List<AllBoardResponse> findAllBoard(Integer board_type) {
+    public List<AllBoardResponse> findAllBoards() {
+        try {
+            List<Board> boardList = boardRepository.findAll();
+            List<AllBoardResponse> responseDtoList = new ArrayList<>();
+
+            for (Board board : boardList) {
+                responseDtoList.add(
+                        new AllBoardResponse(board)
+                );
+            }
+            return responseDtoList;
+        } catch (Exception e) {
+//            throw new ResponseStatus.BAD_REQUEST;
+        }
+        return null;
+    }
+
+    // 타입별 모든 게시글 가져오기
+    public List<AllBoardResponse> findAllBoardsByBoardType(Integer board_type) {
         try {
             List<Board> boardList = boardRepository.findAllByBoardType(board_type);
             List<AllBoardResponse> responseDtoList = new ArrayList<>();

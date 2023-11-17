@@ -33,10 +33,17 @@ public class BoardController {
         }
     }
 
-    // 전체 목록 조회
+    // 전체 게시글 조회
+    @GetMapping("/board")
+    public BaseResponse<List<AllBoardResponse>> getAllBoards() {
+        List<AllBoardResponse> allBoardResponses = boardService.findAllBoards();
+        return new BaseResponse<>(allBoardResponses);
+    }
+
+    // 타입별 전체 게시글 조회
     @GetMapping("/{board_type}")
-    public BaseResponse<List<AllBoardResponse>> getAllBoards(@PathVariable Integer board_type) {
-        List<AllBoardResponse> allBoardResponses = boardService.findAllBoard(board_type);
+    public BaseResponse<List<AllBoardResponse>> getAllBoardsByBoardType(@PathVariable Integer board_type) {
+        List<AllBoardResponse> allBoardResponses = boardService.findAllBoardsByBoardType(board_type);
         return new BaseResponse<>(allBoardResponses);
     }
 
