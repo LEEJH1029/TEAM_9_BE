@@ -1,13 +1,15 @@
 package com.seasonwell.backend.disease.service;
 
+import com.seasonwell.backend.disease.dto.DiseaseDetailDto;
 import com.seasonwell.backend.disease.dto.DiseaseDto;
+import com.seasonwell.backend.disease.dto.PreventionResponse;
 
 import java.util.List;
 
 public interface DiseaseService {
     List<DiseaseDto> getAllDiseases();
-    DiseaseDto getDiseaseByCode(String diseaseCode);
+    DiseaseDetailDto getDiseaseByCode(String diseaseCode);
     List<DiseaseDto> getDiseasesBySeason(String season);
-    List<DiseaseDto> getDiseasesByName(String name);
     List<DiseaseDto> getDiseasesByNameContaining(String keyword);
+    List<PreventionResponse> getPreventionByDiseaseCode(String diseaseCode);
 }

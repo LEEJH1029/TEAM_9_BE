@@ -30,6 +30,9 @@ public class Disease {
     @OneToMany(mappedBy = "disease")
     private List<DiseaseNutrients> diseaseNutrients;
 
+    @OneToMany(mappedBy = "disease")
+    private List<DiseasePrevention> diseasePreventions;
+
     @OneToOne(mappedBy = "disease")
     private Board board;
 

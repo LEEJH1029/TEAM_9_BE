@@ -1,6 +1,5 @@
 package com.seasonwell.backend.medicine.dto;
 
-import com.seasonwell.backend.disease.dto.DiseaseDto;
 import lombok.*;
 
 @Getter
