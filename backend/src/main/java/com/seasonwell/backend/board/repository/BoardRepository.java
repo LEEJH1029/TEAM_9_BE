@@ -20,4 +20,14 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findByBoardTitle(
             @Param("boardTitle") String board_title
     );
+
+    @Query("SELECT m FROM Board m WHERE lower(m.boardContent) LIKE lower(concat('%', :boardContent, '%'))")
+    List<Board> findByBoardContent(
+            @Param("boardContent") String board_content
+    );
+
+    @Query("SELECT m FROM Board m WHERE lower(m.boardAuthor) LIKE lower(concat('%', :boardAuthor, '%'))")
+    List<Board> findByBoardAuthor(
+            @Param("boardAuthor") String board_author
+    );
 }

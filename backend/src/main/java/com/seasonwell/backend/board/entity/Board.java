@@ -21,9 +21,7 @@ public class Board extends BoardTime {
     private Long boardNo;
 
     // fk) 질병 코드
-//    @Column(length = 100, nullable = false)
-//    private String diseaseCode;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "disease_code", nullable = false)
     private Disease disease;
 
