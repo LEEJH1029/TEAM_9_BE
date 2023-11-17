@@ -32,11 +32,11 @@ public class NutrientsService {
     }
 
     public List<NutrientsResponse> getPersonalNutrients(String disease_code) {
-        try{
+        try {
             List<Nutrients> nutrientsList = nutrientsRepository.findAllByDiseaseCode(disease_code);
             List<NutrientsResponse> responses = new ArrayList<>();
 
-            for(Nutrients nutrients: nutrientsList) {
+            for (Nutrients nutrients : nutrientsList) {
                 responses.add(new NutrientsResponse(nutrients));
             }
             return responses;
@@ -44,5 +44,19 @@ public class NutrientsService {
 //            throw
         }
         return null;
+    }
+
+
+    public List<NutrientsResponse> getRecommendedNutrients(String disease1, String disease2, String disease3, String disease4, String disease5) {
+        List<String> diseaseCodes = List.of(disease1, disease2, disease3, disease4, disease5);
+
+        List<Nutrients> recommendedNutrients = nutrientsRepository.findByDiseaseCodeIn(diseaseCodes);
+        List<NutrientsResponse> responses = new ArrayList<>();
+
+        for (Nutrients nutrients : recommendedNutrients) {
+            responses.add(new NutrientsResponse(nutrients));
+        }
+        return responses;
+
     }
 }
