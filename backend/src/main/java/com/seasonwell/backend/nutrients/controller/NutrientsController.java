@@ -29,6 +29,11 @@ public class NutrientsController {
             return new ResponseEntity<>(allNutrientsResponses, HttpStatus.OK);
         }
     }
+    @GetMapping("/representation") // 대표 4개
+    public BaseResponse<List<NutrientsResponse>> getRepresentNutrients() {
+        List<NutrientsResponse> allNutrientsResponses = nutrientsService.getRepresentNutrients();
+        return new BaseResponse<>(allNutrientsResponses);
+    }
 
     @GetMapping("/{nutrients_Id}")
     public ResponseEntity<NutrientsDetailResponse> getNutrientById(@PathVariable Long nutrients_Id) {

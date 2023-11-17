@@ -1,12 +1,17 @@
 package com.seasonwell.backend.disease.service;
 
-import com.seasonwell.backend.disease.dto.DiseaseDto;
+import com.seasonwell.backend.disease.dto.*;
 import com.seasonwell.backend.disease.entity.Disease;
+import com.seasonwell.backend.disease.entity.Prevention;
+import com.seasonwell.backend.disease.repository.DiseasePreventionRepository;
 import com.seasonwell.backend.disease.repository.DiseaseRepository;
+import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
+import com.seasonwell.backend.medicine.service.MedicineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,42 +19,32 @@ import java.util.stream.Collectors;
 @Service
 public class DiseaseServiceImpl implements DiseaseService {
     private final DiseaseRepository diseaseRepository;
+    private final DiseasePreventionRepository diseasePreventionRepository;
+    private final MedicineService medicineService;
+
 
     @Autowired
-    public DiseaseServiceImpl(DiseaseRepository diseaseRepository) {
+    public DiseaseServiceImpl(DiseaseRepository diseaseRepository, DiseasePreventionRepository diseasePreventionRepository, MedicineService medicineService) {
         this.diseaseRepository = diseaseRepository;
+        this.diseasePreventionRepository = diseasePreventionRepository;
+        this.medicineService = medicineService;
     }
 
+
     @Override
-    public List<DiseaseDto> getAllDiseases() {
+    public List<DiseaseDto> getAllDiseases() { // 전체 질병 출력
         List<Disease> diseaseEntities = diseaseRepository.findAll();
         return convertToDtoList(diseaseEntities);
     }
 
     @Override
-    public DiseaseDto getDiseaseByCode(String diseaseCode) {
-        Disease diseaseEntity = diseaseRepository.findById(diseaseCode).orElse(null);
-        if (diseaseEntity != null) {
-            return convertToDto(diseaseEntity);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public List<DiseaseDto> getDiseasesBySeason(String season) {
+    public List<DiseaseDto> getDiseasesBySeason(String season) { // 계절별 질병 출력
         List<Disease> diseaseEntities = diseaseRepository.findByDisease_season(season);
         return convertToDtoList(diseaseEntities);
     }
 
     @Override
-    public List<DiseaseDto> getDiseasesByName(String name) {
-        List<Disease> diseaseEntities = diseaseRepository.findByDisease_name(name);
-        return convertToDtoList(diseaseEntities);
-    }
-
-    @Override
-    public List<DiseaseDto> getDiseasesByNameContaining(String keyword) {
+    public List<DiseaseDto> getDiseasesByNameContaining(String keyword) { // 질병 검색 결과 출력
         List<Disease> diseaseEntities = diseaseRepository.findByDiseaseNameContainingIgnoreCase(keyword);
         return convertToDtoList(diseaseEntities);
     }
@@ -65,10 +60,65 @@ public class DiseaseServiceImpl implements DiseaseService {
                 .disease_code(diseaseEntity.getDisease_code())
                 .disease_season(diseaseEntity.getDisease_season())
                 .disease_name(diseaseEntity.getDisease_name())
-                .disease_protect(diseaseEntity.getDisease_protect())
-                .disease_cure(diseaseEntity.getDisease_cure())
-                .disease_symptom(diseaseEntity.getDisease_symptom())
+                .disease_image(diseaseEntity.getDisease_image())
                 .build();
     }
+
+    @Override
+    public List<PreventionResponse> getPreventionByDiseaseCode(String disease_code) { // 질병 별 예방방법 출력
+        try {
+            List<Prevention> preventionList = diseasePreventionRepository.findAllByDiseaseCode(disease_code);
+            List<PreventionResponse> preventionResponseList = new ArrayList<>();
+
+            for (Prevention prevention : preventionList) {
+                preventionResponseList.add(new PreventionResponse(prevention));
+            }
+            return preventionResponseList;
+        } catch (Exception e) {
+            // Exception 처리
+        }
+        return null;
+    }
+
+    @Override
+    public DiseaseDetailDto getDiseaseByCode(String diseaseCode) { // Disease_Detail
+        Disease diseaseEntity = diseaseRepository.findById(diseaseCode).orElse(null);
+        List<PreventionResponse> preventionResponses = getPreventionByDiseaseCode(diseaseCode);
+        List<MedicineDiseaseDto> medicineDtos = medicineService.getMedicinesByDiseaseCode(diseaseCode);
+
+        if (diseaseEntity != null) {
+            return convertToDetailDto(diseaseEntity, preventionResponses, medicineDtos);
+        } else {
+            return null;
+        }
+    }
+
+    private DiseaseDetailDto convertToDetailDto(Disease diseaseEntity, List<PreventionResponse> preventionResponses, List<MedicineDiseaseDto> medicineDtos) {
+        return DiseaseDetailDto.builder()
+                .disease_code(diseaseEntity.getDisease_code())
+                .disease_season(diseaseEntity.getDisease_season())
+                .disease_name(diseaseEntity.getDisease_name())
+                .disease_protect(convertToProtectDto(preventionResponses,diseaseEntity.getDisease_protect()))
+                .disease_cure(converToCureDto(medicineDtos, diseaseEntity.getDisease_cure()))
+                .disease_symptom(diseaseEntity.getDisease_symptom())
+                .disease_image(diseaseEntity.getDisease_image())
+                .build();
+    }
+
+    private DiseaseProtectDto convertToProtectDto(List<PreventionResponse> preventionResponses, String description) {
+        return DiseaseProtectDto.builder()
+                .keyword(preventionResponses)
+                .description(description)
+                .build();
+    }
+
+
+    private DiseaseCureDto converToCureDto(List<MedicineDiseaseDto> medicineDtos, String description) {
+        return DiseaseCureDto.builder()
+                .keyword(medicineDtos)
+                .description(description)
+                .build();
+    }
+
 }
 

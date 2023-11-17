@@ -1,5 +1,6 @@
 package com.seasonwell.backend.disease.controller;
 
+import com.seasonwell.backend.disease.dto.DiseaseDetailDto;
 import com.seasonwell.backend.disease.dto.DiseaseDto;
 import com.seasonwell.backend.disease.service.DiseaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,10 @@ public class DiseaseController {
     }
 
     @GetMapping("/{disease_code}") // detail
-    public ResponseEntity<DiseaseDto> getDiseaseByCode(@PathVariable String disease_code) {
-        DiseaseDto diseaseDto = diseaseService.getDiseaseByCode(disease_code);
-        if (diseaseDto != null) {
-            return new ResponseEntity<>(diseaseDto, HttpStatus.OK);
+    public ResponseEntity<DiseaseDetailDto> getDiseaseByCode(@PathVariable String disease_code) {
+        DiseaseDetailDto diseaseDetailDto = diseaseService.getDiseaseByCode(disease_code);
+        if (diseaseDetailDto != null) {
+            return new ResponseEntity<>(diseaseDetailDto, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -48,7 +49,7 @@ public class DiseaseController {
         }
     }
 
-    @GetMapping("/search/{disease_name}") /// 검색
+    @GetMapping("/search/{disease_name}") // 검색
     public ResponseEntity<List<DiseaseDto>> searchDiseases(@PathVariable String disease_name) {
         List<DiseaseDto> diseasesByKeyword = diseaseService.getDiseasesByNameContaining(disease_name);
         if (!diseasesByKeyword.isEmpty()) {
@@ -57,6 +58,5 @@ public class DiseaseController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 }
 

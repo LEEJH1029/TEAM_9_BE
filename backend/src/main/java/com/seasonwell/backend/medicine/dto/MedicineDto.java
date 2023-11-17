@@ -1,6 +1,5 @@
 package com.seasonwell.backend.medicine.dto;
 
-import com.seasonwell.backend.disease.dto.DiseaseDto;
 import lombok.*;
 
 @Getter
@@ -11,6 +10,8 @@ import lombok.*;
 public class MedicineDto {
 
     private String disease_code; // fk
+
+    private String disease_name;
 
     private String medicine_code;
 
