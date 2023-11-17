@@ -81,10 +81,46 @@ public class BoardService {
         return new OneBoardResponse(board);
     }
 
-    // 게시글 검색
+    // 게시글 검색 - 제목 기준
     public List<AllBoardResponse> findAllBoardByBoardTitle(String board_title) {
         try {
             List<Board> boardList = boardRepository.findByBoardTitle(board_title);
+            List<AllBoardResponse> responseDtoList = new ArrayList<>();
+
+            for (Board board : boardList) {
+                responseDtoList.add(
+                        new AllBoardResponse(board)
+                );
+            }
+            return responseDtoList;
+        } catch (Exception e) {
+//            throw new ResponseStatus.BAD_REQUEST;
+        }
+        return null;
+    }
+
+    // 게시글 검색 - 내용 기준
+    public List<AllBoardResponse> findAllBoardByBoardContent(String board_content) {
+        try {
+            List<Board> boardList = boardRepository.findByBoardContent(board_content);
+            List<AllBoardResponse> responseDtoList = new ArrayList<>();
+
+            for (Board board : boardList) {
+                responseDtoList.add(
+                        new AllBoardResponse(board)
+                );
+            }
+            return responseDtoList;
+        } catch (Exception e) {
+//            throw new ResponseStatus.BAD_REQUEST;
+        }
+        return null;
+    }
+
+    // 게시글 검색 - 작성자 기준
+    public List<AllBoardResponse> findAllBoardByBoardAuthor(String board_author) {
+        try {
+            List<Board> boardList = boardRepository.findByBoardAuthor(board_author);
             List<AllBoardResponse> responseDtoList = new ArrayList<>();
 
             for (Board board : boardList) {
