@@ -25,7 +25,7 @@ public class CommentService {
     private final UserRepository userRepository;
 
     @Transactional
-    public List<CommentResponse> getAllComments(Integer board_type, Long id) {
+    public List<CommentResponse> getAllComments(String board_type, Long id) {
         Board board = boardRepository.findByBoardTypeAndBoardNo(board_type, id);
         List<Comment> commentsInfo = commentRepository.findCommentEntitiesByBoard(board);
 
@@ -45,7 +45,7 @@ public class CommentService {
     }
 
     @Transactional
-    public String commentWrite(CommentRequest commentRequest, HttpSession session, Integer board_type, Long id) {
+    public String commentWrite(CommentRequest commentRequest, HttpSession session, String board_type, Long id) {
         Board board = boardRepository.findByBoardTypeAndBoardNo(board_type, id);
         String userId = (String) session.getAttribute("userId");
 
@@ -53,7 +53,7 @@ public class CommentService {
 
         Boolean authority = true;
 
-        if (board.getBoardType() == 1) {    // 의료 상담 게시판일 경우
+        if (board.getBoardType().equals("1")) {    // 의료 상담 게시판일 경우
             if (currentUser.get().getUser_type() != 2) {    // 의료 종사자일 경우
                 authority = false;
             }

@@ -64,7 +64,7 @@ public class BoardService {
     }
 
     // 타입별 모든 게시글 가져오기
-    public List<AllBoardResponse> findAllBoardsByBoardType(Integer board_type) {
+    public List<AllBoardResponse> findAllBoardsByBoardType(String board_type) {
         try {
             List<Board> boardList = boardRepository.findAllByBoardType(board_type);
             List<AllBoardResponse> responseDtoList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class BoardService {
     }
 
     // 게시글 하나 가져오기
-    public OneBoardResponse findOneBoard(Integer boardType, Long id) {
+    public OneBoardResponse findOneBoard(String boardType, Long id) {
         Board board = boardRepository.findByBoardTypeAndBoardNo(boardType, id);
         List<Comment> comments = commentRepository.findCommentEntitiesByBoard(board);
         return new OneBoardResponse(board, comments);

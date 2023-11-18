@@ -48,7 +48,8 @@ public class BoardController {
 
     // 타입별 전체 게시글 조회
     @GetMapping("/{board_type}")
-    public ResponseEntity<List<AllBoardResponse>> getAllBoardsByBoardType(@PathVariable Integer board_type) {
+//    public ResponseEntity<List<AllBoardResponse>> getAllBoardsByBoardType(@PathVariable Integer board_type) {
+    public ResponseEntity<List<AllBoardResponse>> getAllBoardsByBoardType(@PathVariable String board_type) {
         List<AllBoardResponse> allBoardResponses = boardService.findAllBoardsByBoardType(board_type);
         if (allBoardResponses.isEmpty())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -60,7 +61,8 @@ public class BoardController {
     // 글 하나 조회
     @GetMapping("/{board_type}/{board_no}")
     public ResponseEntity<OneBoardResponse> getOneBoard(
-            @PathVariable Integer board_type,
+//            @PathVariable Integer board_type,
+            @PathVariable String board_type,
             @PathVariable Long board_no
     ) {
         OneBoardResponse oneBoardResponse = boardService.findOneBoard(board_type, board_no);
@@ -128,7 +130,8 @@ public class BoardController {
     // 타입 내 게시글 검색 - 제목 기준
     @GetMapping("/search/title/{board_type}/{board_title}")
     public ResponseEntity<List<AllBoardResponse>> getAllBoardByBoardTitleAndBoardType(
-            @PathVariable Integer board_type,
+//            @PathVariable Integer board_type,
+            @PathVariable String board_type,
             @PathVariable String board_title
     ) {
         List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardTitle(board_title);
@@ -149,7 +152,8 @@ public class BoardController {
     // 타입 내 게시글 검색 - 내용 기준
     @GetMapping("/search/content/{board_type}/{board_content}")
     public ResponseEntity<List<AllBoardResponse>> getAllBoardByBoardContentAndBoardType(
-            @PathVariable Integer board_type,
+//            @PathVariable Integer board_type,
+            @PathVariable String board_type,
             @PathVariable String board_content
     ) {
         List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardContent(board_content);
@@ -170,7 +174,8 @@ public class BoardController {
     // 타입 내 게시글 검색 - 작성자 기준
     @GetMapping("/search/author/{board_type}/{board_author}")
     public ResponseEntity<List<AllBoardResponse>> getAllBoardByBoardAuthorAndBoardType(
-            @PathVariable Integer board_type,
+//            @PathVariable Integer board_type,
+            @PathVariable String board_type,
             @PathVariable String board_author
     ) {
         List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardAuthor(board_author);

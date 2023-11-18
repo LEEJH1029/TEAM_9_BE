@@ -19,7 +19,7 @@ public class CommentController {
 
     @GetMapping("/{board_type}/{board_no}/comment")
     public ResponseEntity<List<CommentResponse>> getAllComments(
-            @PathVariable Integer board_type,
+            @PathVariable String board_type,
             @PathVariable Long board_no
     ) {
         List<CommentResponse> allComments = commentService.getAllComments(board_type, board_no);
@@ -32,7 +32,7 @@ public class CommentController {
 
     @PostMapping("{board_type}/{board_no}/comment/write")
     public ResponseEntity<String> writeComment(
-            @PathVariable Integer board_type,
+            @PathVariable String board_type,
             @PathVariable Long board_no,
             @RequestBody CommentRequest commentRequest,
             HttpSession session
