@@ -19,6 +19,7 @@ public class OneBoardResponse {
 
     private Long board_no;
     private String board_title;
+    private String board_keyword;
     private String board_author;
     private LocalDateTime board_date;
     private String board_type;
@@ -31,6 +32,7 @@ public class OneBoardResponse {
     public OneBoardResponse(Board board, List<Comment> comments) {
         this.board_no = board.getBoardNo();
         this.board_title = board.getBoardTitle();
+        this.board_keyword = board.getBoardTitle();
         this.board_author = board.getBoardAuthor();
         this.board_date = board.getBoardDate();
         this.board_type = board.getBoardType();
