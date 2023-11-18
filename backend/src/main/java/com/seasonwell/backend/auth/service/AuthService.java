@@ -42,7 +42,7 @@ public class AuthService {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code"); //고정값
         params.add("client_id", apiKey);
-        params.add("redirect_uri", "http://localhost:8080/auth/login/kakao"); //등록한 redirect uri
+        params.add("redirect_uri", "https://seasonwell.vercel.app/auth/login/kakao"); //등록한 redirect uri
         params.add("code", code);
 
         // 헤더와 바디 합치기 위해 Http Entity 객체 생성

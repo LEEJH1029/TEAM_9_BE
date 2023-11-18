@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class NutrientsResponse {
     private Long Id;
     private List<String> disease_codes;
+    private List<String> disease_names;
     private String nutrients_name;
     private String nutrients_efficiency;
     private String image_url;
@@ -24,6 +25,9 @@ public class NutrientsResponse {
         this.Id = nutrients.getId();
         this.disease_codes = nutrients.getDiseaseNutrients().stream()
                 .map(diseaseNutrient -> diseaseNutrient.getDisease().getDisease_code())
+                .collect(Collectors.toList());
+        this.disease_names =  nutrients.getDiseaseNutrients().stream()
+                .map(diseaseNutrient -> diseaseNutrient.getDisease().getDisease_name())
                 .collect(Collectors.toList());
         this.nutrients_name = nutrients.getNutrients_name();
         this.nutrients_efficiency = nutrients.getNutrients_efficiency();

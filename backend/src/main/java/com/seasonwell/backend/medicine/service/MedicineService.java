@@ -17,5 +17,5 @@ public interface MedicineService {
 
     List<MedicineDto> getRecommendedMedicines(String disease1, String disease2, String disease3, String disease4, String disease5);
 
-    List<MedicineDiseaseDto> getPersonalMedicines(List<String> diseases);
+    List<MedicineDto> getPersonalMedicines(List<String> diseases);
 }

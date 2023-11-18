@@ -66,14 +66,14 @@ public class MedicineController {
     }
 
     @GetMapping("/personal")
-    public ResponseEntity<List<MedicineDiseaseDto>> getPersonalMedicines(
+    public ResponseEntity<List<MedicineDto>> getPersonalMedicines(
             @RequestParam(name = "disease1", defaultValue = "") String disease1,
             @RequestParam(name = "disease2", defaultValue = "") String disease2,
             @RequestParam(name = "disease3", defaultValue = "") String disease3,
             @RequestParam(name = "disease4", defaultValue = "") String disease4
     ) {
         List<String> diseases = Arrays.asList(disease1, disease2, disease3, disease4);
-        List<MedicineDiseaseDto> personalMedicines = medicineService.getPersonalMedicines(diseases);
+        List<MedicineDto> personalMedicines = medicineService.getPersonalMedicines(diseases);
         return new ResponseEntity<>(personalMedicines, HttpStatus.OK);
     }
 
