@@ -21,6 +21,7 @@ public class AllBoardResponse {
     private LocalDateTime board_date;
     private Integer board_type;
 
+
     public AllBoardResponse(Board board) {
         this.board_no = board.getBoardNo();
         this.board_title = board.getBoardTitle();

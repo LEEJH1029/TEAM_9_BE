@@ -3,9 +3,12 @@ package com.seasonwell.backend.board.service;
 
 import com.seasonwell.backend.board.dto.AllBoardResponse;
 import com.seasonwell.backend.board.dto.BoardRequest;
+import com.seasonwell.backend.board.dto.CommentResponse;
 import com.seasonwell.backend.board.dto.OneBoardResponse;
 import com.seasonwell.backend.board.entity.Board;
+import com.seasonwell.backend.board.entity.Comment;
 import com.seasonwell.backend.board.repository.BoardRepository;
+import com.seasonwell.backend.board.repository.CommentRepository;
 import com.seasonwell.backend.disease.entity.Disease;
 import com.seasonwell.backend.disease.repository.DiseaseRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +18,15 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final DiseaseRepository diseaseRepository;
+//    private final DiseaseRepository diseaseRepository;
+    private final CommentRepository commentRepository;
 
     // 게시글 생성
     public String createBoard(BoardRequest boardRequest, HttpSession session) {
@@ -79,7 +84,8 @@ public class BoardService {
     // 게시글 하나 가져오기
     public OneBoardResponse findOneBoard(Integer boardType, Long id) {
         Board board = boardRepository.findByBoardTypeAndBoardNo(boardType, id);
-        return new OneBoardResponse(board);
+        List<Comment> comments = commentRepository.findCommentEntitiesByBoard(board);
+        return new OneBoardResponse(board, comments);
     }
 
     // 게시글 검색 - 제목 기준
@@ -136,7 +142,7 @@ public class BoardService {
         return null;
     }
 
-    private Disease getOrCreateDisease(String diseaseCode) {
-        return diseaseRepository.findByDisease_code(diseaseCode);
-    }
+//    private Disease getOrCreateDisease(String diseaseCode) {
+//        return diseaseRepository.findByDisease_code(diseaseCode);
+//    }
 }
