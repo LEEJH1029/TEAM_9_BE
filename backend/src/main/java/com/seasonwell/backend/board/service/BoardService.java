@@ -9,6 +9,7 @@ import com.seasonwell.backend.board.entity.Board;
 import com.seasonwell.backend.board.entity.Comment;
 import com.seasonwell.backend.board.repository.BoardRepository;
 import com.seasonwell.backend.board.repository.CommentRepository;
+import com.seasonwell.backend.disease.dto.DiseaseDto;
 import com.seasonwell.backend.disease.entity.Disease;
 import com.seasonwell.backend.disease.repository.DiseaseRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,16 @@ public class BoardService {
 //            throw new ResponseStatus.BAD_REQUEST;
         }
         return null;
+    }
+
+    public List<AllBoardResponse> getRepresentBoards(String board_type) { // 최근 게시글 4개
+        List<Board> boardList = boardRepository.findAllByBoardTypeOrderByBoardNoDesc(board_type);
+
+        int numberOfRecentBoards = Math.min(4, boardList.size());
+
+        List<Board> recentBoards = boardList.subList(0, numberOfRecentBoards);
+
+        return convertToDtoList(recentBoards);
     }
 
     // 타입별 모든 게시글 가져오기
@@ -140,6 +151,12 @@ public class BoardService {
 //            throw new ResponseStatus.BAD_REQUEST;
         }
         return null;
+    }
+
+    private List<AllBoardResponse> convertToDtoList(List<Board> boardList) {
+        return boardList.stream()
+                .map(AllBoardResponse::new)
+                .collect(Collectors.toList());
     }
 
 //    private Disease getOrCreateDisease(String diseaseCode) {
