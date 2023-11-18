@@ -4,6 +4,7 @@ import com.seasonwell.backend.board.dto.BoardRequest;
 import com.seasonwell.backend.board.dto.AllBoardResponse;
 import com.seasonwell.backend.board.dto.OneBoardResponse;
 import com.seasonwell.backend.board.service.BoardService;
+import com.seasonwell.backend.disease.dto.DiseaseDto;
 import com.seasonwell.backend.global.config.BaseResponse;
 import com.seasonwell.backend.global.config.ResponseStatus;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,12 @@ public class BoardController {
         else {
             return new ResponseEntity<>(allBoardResponses, HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/representation/{board_type}") // 최근 4개
+    public ResponseEntity<List<AllBoardResponse>> getRepresentBoards(@PathVariable String board_type) {
+        List<AllBoardResponse> allBoardResponses = boardService.getRepresentBoards(board_type);
+        return new ResponseEntity<>(allBoardResponses, HttpStatus.OK);
     }
 
     // 타입별 전체 게시글 조회

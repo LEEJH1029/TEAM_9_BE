@@ -14,6 +14,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     List<Board> findAllByBoardType(String boardType);
 
+    List<Board> findAllByBoardTypeOrderByBoardNoDesc(String boardType);
+
     Board findByBoardTypeAndBoardNo(String boardType, Long boardNo);
 
     @Query("SELECT m FROM Board m WHERE lower(m.boardTitle) LIKE lower(concat('%', :boardTitle, '%'))")

@@ -1,6 +1,7 @@
 package com.seasonwell.backend.nutrients.repository;
 
 import com.seasonwell.backend.medicine.entity.Medicine;
+import com.seasonwell.backend.board.entity.Board;
 import com.seasonwell.backend.nutrients.entity.Nutrients;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,11 @@ public interface NutrientsRepository extends JpaRepository<Nutrients, Long> {
     List<Nutrients> findAll();
 
     Optional<Nutrients> findById(Long id);
+
+    @Query("SELECT m FROM Nutrients m WHERE lower(m.nutrients_name) LIKE lower(concat('%', :nutrients_name, '%'))")
+    List<Nutrients> findByNutrients_name(
+            @Param("nutrients_name") String nutrients_name
+    );
 
     @Query("SELECT n FROM Nutrients n INNER JOIN n.diseaseNutrients dn INNER JOIN dn.disease d WHERE d.disease_code = :diseaseCode")
     List<Nutrients> findAllByDiseaseCode(@Param("diseaseCode") String diseaseCode);

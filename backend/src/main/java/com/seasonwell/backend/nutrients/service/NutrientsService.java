@@ -2,6 +2,8 @@ package com.seasonwell.backend.nutrients.service;
 
 import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
 import com.seasonwell.backend.medicine.entity.Medicine;
+import com.seasonwell.backend.board.dto.AllBoardResponse;
+import com.seasonwell.backend.board.entity.Board;
 import com.seasonwell.backend.nutrients.dto.NutrientsDetailResponse;
 import com.seasonwell.backend.nutrients.dto.NutrientsResponse;
 import com.seasonwell.backend.nutrients.entity.Nutrients;
@@ -56,6 +58,24 @@ public class NutrientsService {
         } catch (Exception e) {
             return new ArrayList<>();
         }
+    }
+
+    // 영양제 이름으로 검색
+    public List<NutrientsResponse> findAllNutrientesByName(String nutrients_name) {
+        try {
+            List<Nutrients> nutrientsList = nutrientsRepository.findByNutrients_name(nutrients_name);
+            List<NutrientsResponse> responseDtoList = new ArrayList<>();
+
+            for (Nutrients nutrients : nutrientsList) {
+                responseDtoList.add(
+                        new NutrientsResponse(nutrients)
+                );
+            }
+            return responseDtoList;
+        } catch (Exception e) {
+//            throw new ResponseStatus.BAD_REQUEST;
+        }
+        return null;
     }
 
 
