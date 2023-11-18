@@ -6,6 +6,8 @@ import com.seasonwell.backend.disease.entity.Prevention;
 import com.seasonwell.backend.disease.repository.DiseasePreventionRepository;
 import com.seasonwell.backend.disease.repository.DiseaseRepository;
 import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
+import com.seasonwell.backend.medicine.dto.MedicineDto;
+import com.seasonwell.backend.medicine.entity.Medicine;
 import com.seasonwell.backend.medicine.service.MedicineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,19 @@ public class DiseaseServiceImpl implements DiseaseService {
         this.diseaseRepository = diseaseRepository;
         this.diseasePreventionRepository = diseasePreventionRepository;
         this.medicineService = medicineService;
+    }
+
+    @Override
+    public List<DiseaseDto> getRepresentDiseases() { // 약 대표 4개 출력
+        List<Disease> diseaseEntities = diseaseRepository.findAll();
+
+        List<Disease> selectedDiseases = new ArrayList<>();
+        selectedDiseases.add(diseaseEntities.get(0));
+        selectedDiseases.add(diseaseEntities.get(2));
+        selectedDiseases.add(diseaseEntities.get(6));
+        selectedDiseases.add(diseaseEntities.get(9));
+
+        return convertToDtoList(selectedDiseases);
     }
 
 

@@ -3,6 +3,7 @@ package com.seasonwell.backend.disease.controller;
 import com.seasonwell.backend.disease.dto.DiseaseDetailDto;
 import com.seasonwell.backend.disease.dto.DiseaseDto;
 import com.seasonwell.backend.disease.service.DiseaseService;
+import com.seasonwell.backend.medicine.dto.MedicineDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,12 @@ public class DiseaseController {
     @GetMapping("") // 전체 출력
     public ResponseEntity<List<DiseaseDto>> getAllDiseases() {
         List<DiseaseDto> allDiseases = diseaseService.getAllDiseases();
+        return new ResponseEntity<>(allDiseases, HttpStatus.OK);
+    }
+
+    @GetMapping("/representation") // 대표 4개
+    public ResponseEntity<List<DiseaseDto>> getRepresentDiseases() {
+        List<DiseaseDto> allDiseases = diseaseService.getRepresentDiseases();
         return new ResponseEntity<>(allDiseases, HttpStatus.OK);
     }
 
