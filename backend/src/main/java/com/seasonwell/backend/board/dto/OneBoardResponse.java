@@ -21,7 +21,7 @@ public class OneBoardResponse {
     private String board_title;
     private String board_author;
     private LocalDateTime board_date;
-    private Integer board_type;
+    private String board_type;
     private String board_content;
 //    private String disease_code;
 

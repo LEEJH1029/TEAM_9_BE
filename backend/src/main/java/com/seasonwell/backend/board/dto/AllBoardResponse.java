@@ -19,7 +19,8 @@ public class AllBoardResponse {
     private String board_author;
 //    private String disease_code;
     private LocalDateTime board_date;
-    private Integer board_type;
+//    private Integer board_type;
+    private String board_type;
 
 
     public AllBoardResponse(Board board) {

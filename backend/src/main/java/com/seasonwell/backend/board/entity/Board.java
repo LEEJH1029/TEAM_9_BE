@@ -41,7 +41,7 @@ public class Board extends BoardTime {
     // 타입
     // 1. 의료상담  2. 의약품 리뷰
     @Column
-    private Integer boardType;
+    private String boardType;
 
 
 //    public Board(BoardRequest boardRequest, Disease disease) {
