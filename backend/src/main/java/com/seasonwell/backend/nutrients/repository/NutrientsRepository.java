@@ -1,5 +1,6 @@
 package com.seasonwell.backend.nutrients.repository;
 
+import com.seasonwell.backend.medicine.entity.Medicine;
 import com.seasonwell.backend.nutrients.entity.Nutrients;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,9 @@ public interface NutrientsRepository extends JpaRepository<Nutrients, Long> {
 
     @Query("SELECT DISTINCT n FROM Nutrients n INNER JOIN n.diseaseNutrients dn INNER JOIN dn.disease d WHERE d.disease_code IN :diseaseCode")
     List<Nutrients> findByDiseaseCodeIn(@Param("diseaseCode") List<String> diseaseCode);
+
+    @Query("SELECT n FROM Nutrients n INNER JOIN n.diseaseNutrients dn INNER JOIN dn.disease d WHERE lower(d.disease_symptom) LIKE lower(concat('%', :keyword, '%'))")
+    List<Nutrients> findByDiseaseSymptomContainingIgnoreCase(@Param("keyword") String keyword);
 }
+
+

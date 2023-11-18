@@ -1,10 +1,8 @@
 package com.seasonwell.backend.nutrients.dto;
 
+import com.seasonwell.backend.nutrients.entity.DiseaseNutrients;
 import com.seasonwell.backend.nutrients.entity.Nutrients;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +11,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 public class NutrientsResponse {
     private Long Id;

@@ -6,8 +6,6 @@ import com.seasonwell.backend.disease.entity.Prevention;
 import com.seasonwell.backend.disease.repository.DiseasePreventionRepository;
 import com.seasonwell.backend.disease.repository.DiseaseRepository;
 import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
-import com.seasonwell.backend.medicine.dto.MedicineDto;
-import com.seasonwell.backend.medicine.entity.Medicine;
 import com.seasonwell.backend.medicine.service.MedicineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,16 +1,23 @@
 package com.seasonwell.backend.nutrients.service;
 
+import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
+import com.seasonwell.backend.medicine.entity.Medicine;
 import com.seasonwell.backend.nutrients.dto.NutrientsDetailResponse;
 import com.seasonwell.backend.nutrients.dto.NutrientsResponse;
 import com.seasonwell.backend.nutrients.entity.Nutrients;
 import com.seasonwell.backend.nutrients.repository.NutrientsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -90,4 +97,35 @@ public class NutrientsService {
         }
         return responses;
     }
+
+    public List<NutrientsResponse> getPersonalNutrients2(List<String> diseases) {
+        List<Nutrients> results = getNutrientsByDiseases(diseases);
+        List<NutrientsResponse> responses = new ArrayList<>();
+
+        Set<NutrientsResponse> uniqueResponses = new HashSet<>();
+
+        for (Nutrients nutrient : results) {
+            NutrientsResponse response = new NutrientsResponse(nutrient);
+            uniqueResponses.add(response);
+        }
+
+        responses.addAll(uniqueResponses);
+        return responses;
+    }
+
+    private List<Nutrients> getNutrientsByDiseases(List<String> diseases) {
+        List<Nutrients> resultNutrients = new ArrayList<>();
+
+        for (String disease : diseases) {
+            if (StringUtils.hasText(disease)) {
+                List<Nutrients> nutrients = nutrientsRepository.findByDiseaseSymptomContainingIgnoreCase(disease);
+                resultNutrients.addAll(nutrients);
+            }
+        }
+
+        return resultNutrients;
+    }
+
+
+
 }

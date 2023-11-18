@@ -16,4 +16,6 @@ public interface MedicineService {
     List<MedicineDiseaseDto> getMedicinesByDiseaseCode(String disease_code);
 
     List<MedicineDto> getRecommendedMedicines(String disease1, String disease2, String disease3, String disease4, String disease5);
+
+    List<MedicineDiseaseDto> getPersonalMedicines(List<String> diseases);
 }
