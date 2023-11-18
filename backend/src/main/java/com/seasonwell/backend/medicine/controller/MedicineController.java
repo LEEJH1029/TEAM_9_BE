@@ -1,5 +1,6 @@
 package com.seasonwell.backend.medicine.controller;
 
+import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
 import com.seasonwell.backend.medicine.dto.MedicineDto;
 import com.seasonwell.backend.medicine.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -61,6 +63,18 @@ public class MedicineController {
     ) {
         List<MedicineDto> recommendedMedicines = medicineService.getRecommendedMedicines(disease1, disease2, disease3, disease4, disease5);
         return new ResponseEntity<>(recommendedMedicines, HttpStatus.OK);
+    }
+
+    @GetMapping("/personal")
+    public ResponseEntity<List<MedicineDiseaseDto>> getPersonalMedicines(
+            @RequestParam(name = "disease1", defaultValue = "") String disease1,
+            @RequestParam(name = "disease2", defaultValue = "") String disease2,
+            @RequestParam(name = "disease3", defaultValue = "") String disease3,
+            @RequestParam(name = "disease4", defaultValue = "") String disease4
+    ) {
+        List<String> diseases = Arrays.asList(disease1, disease2, disease3, disease4);
+        List<MedicineDiseaseDto> personalMedicines = medicineService.getPersonalMedicines(diseases);
+        return new ResponseEntity<>(personalMedicines, HttpStatus.OK);
     }
 
 

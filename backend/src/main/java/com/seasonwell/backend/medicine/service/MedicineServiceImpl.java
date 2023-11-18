@@ -4,14 +4,19 @@ import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
 import com.seasonwell.backend.medicine.dto.MedicineDto;
 import com.seasonwell.backend.medicine.entity.Medicine;
 import com.seasonwell.backend.medicine.repository.MedicineRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class MedicineServiceImpl implements MedicineService {
     private final MedicineRepository medicineRepository;
 
@@ -61,6 +66,32 @@ public class MedicineServiceImpl implements MedicineService {
         List<Medicine> recommendedMedicines = medicineRepository.findByDiseaseCodeIn(diseaseCodes);
         return convertToDtoList(recommendedMedicines);
     }
+
+    @Override
+    public List<MedicineDiseaseDto> getPersonalMedicines(List<String> diseases) {
+        List<Medicine> resultMedicines = getMedicinesByDiseases(diseases);
+        return converToDtoList2(resultMedicines);
+    }
+
+    private List<Medicine> getMedicinesByDiseases(List<String> diseases) {
+        List<Medicine> resultMedicines = new ArrayList<>();
+
+        for (String disease : diseases) {
+            if (StringUtils.hasText(disease)) {
+                List<Medicine> medicines = medicineRepository.findByDiseaseSymptomContainingIgnoreCase(disease);
+                resultMedicines.addAll(medicines);
+            }
+        }
+
+        // 중복 제거
+        Set<Medicine> uniqueMedicines = new HashSet<>(resultMedicines);
+        resultMedicines.clear();
+        resultMedicines.addAll(uniqueMedicines);
+
+        return resultMedicines;
+    }
+
+
 
     private List<MedicineDto> convertToDtoList(List<Medicine> medicineEntities) {
         return medicineEntities.stream()

@@ -1,5 +1,6 @@
 package com.seasonwell.backend.nutrients.controller;
 
+import com.seasonwell.backend.medicine.dto.MedicineDiseaseDto;
 import com.seasonwell.backend.board.dto.AllBoardResponse;
 import com.seasonwell.backend.nutrients.dto.NutrientsDetailResponse;
 import com.seasonwell.backend.nutrients.dto.NutrientsResponse;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,5 +94,17 @@ public class NutrientsController {
     ) {
         List<NutrientsResponse> recommendedNutrients = nutrientsService.getRecommendedNutrients(disease1, disease2, disease3, disease4, disease5);
         return new ResponseEntity<>(recommendedNutrients, HttpStatus.OK);
+    }
+
+    @GetMapping("/personal")
+    public ResponseEntity<List<NutrientsResponse>> getPersonalNutrients(
+            @RequestParam(name = "disease1", defaultValue = "") String disease1,
+            @RequestParam(name = "disease2", defaultValue = "") String disease2,
+            @RequestParam(name = "disease3", defaultValue = "") String disease3,
+            @RequestParam(name = "disease4", defaultValue = "") String disease4
+    ) {
+        List<String> diseases = Arrays.asList(disease1, disease2, disease3, disease4);
+        List<NutrientsResponse> personalNutrients = nutrientsService.getPersonalNutrients2(diseases);
+        return new ResponseEntity<>(personalNutrients, HttpStatus.OK);
     }
 }
