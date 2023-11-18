@@ -46,7 +46,7 @@ public class NutrientsController {
         }
     }
 
-    @GetMapping("/search/{disease_code}")
+    @GetMapping("/disease/{disease_code}")
     public ResponseEntity<List<NutrientsResponse>> getPersonalNutrients(@PathVariable String disease_code) {
         List<NutrientsResponse> nutrientsResponses = nutrientsService.getPersonalNutrients(disease_code);
         if (nutrientsResponses.isEmpty())
