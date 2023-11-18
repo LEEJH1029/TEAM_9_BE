@@ -30,9 +30,10 @@ public class BoardService {
         if (currentUser == null) {
             return null;
         } else {
-            Disease disease = getOrCreateDisease(boardRequest.getDisease_code());
+//            Disease disease = getOrCreateDisease(boardRequest.getDisease_code());
 
-            Board board = new Board(boardRequest, disease);
+            Board board = new Board(boardRequest);
+//            Board board = new Board(boardRequest, disease);
             board.setBoardAuthor(currentUser);
             boardRepository.save(board);
             return currentUser;
