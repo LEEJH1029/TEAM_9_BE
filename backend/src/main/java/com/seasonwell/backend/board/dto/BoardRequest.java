@@ -17,8 +17,8 @@ public class BoardRequest {
     @JsonProperty
     private String board_content;
 
-    @JsonProperty("disease_code")
-    private String disease_code;
+//    @JsonProperty("disease_code")
+//    private String disease_code;
 
     @JsonProperty
     private Integer board_type;

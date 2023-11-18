@@ -21,9 +21,9 @@ public class Board extends BoardTime {
     private Long boardNo;
 
     // fk) 질병 코드
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "disease_code", nullable = false)
-    private Disease disease;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "disease_code", nullable = false)
+//    private Disease disease;
 
     // 제목
     @Column(length = 20, nullable = false)
@@ -44,8 +44,14 @@ public class Board extends BoardTime {
     private Integer boardType;
 
 
-    public Board(BoardRequest boardRequest, Disease disease) {
-        this.disease = disease;
+//    public Board(BoardRequest boardRequest, Disease disease) {
+//        this.disease = disease;
+//        this.boardTitle = boardRequest.getBoard_title();
+//        this.boardContent = boardRequest.getBoard_content();
+//        this.boardType = boardRequest.getBoard_type();
+//    }
+
+    public Board(BoardRequest boardRequest) {
         this.boardTitle = boardRequest.getBoard_title();
         this.boardContent = boardRequest.getBoard_content();
         this.boardType = boardRequest.getBoard_type();

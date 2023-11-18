@@ -17,7 +17,7 @@ public class AllBoardResponse {
     private String board_title;
     private String board_content;
     private String board_author;
-    private String disease_code;
+//    private String disease_code;
     private LocalDateTime board_date;
     private Integer board_type;
 
@@ -26,7 +26,7 @@ public class AllBoardResponse {
         this.board_title = board.getBoardTitle();
         this.board_content = board.getBoardContent();
         this.board_author = board.getBoardAuthor();
-        this.disease_code = board.getDisease().getDisease_code();
+//        this.disease_code = board.getDisease().getDisease_code();
         this.board_date = board.getBoardDate();
         this.board_type = board.getBoardType();
     }

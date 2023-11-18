@@ -20,7 +20,7 @@ public class OneBoardResponse {
     private LocalDateTime board_date;
     private Integer board_type;
     private String board_content;
-    private String disease_code;
+//    private String disease_code;
 
     public OneBoardResponse(Board board) {
         this.board_no = board.getBoardNo();
@@ -29,6 +29,6 @@ public class OneBoardResponse {
         this.board_date = board.getBoardDate();
         this.board_type = board.getBoardType();
         this.board_content = board.getBoardContent();
-        this.disease_code = board.getDisease().getDisease_code();
+//        this.disease_code = board.getDisease().getDisease_code();
     }
 }

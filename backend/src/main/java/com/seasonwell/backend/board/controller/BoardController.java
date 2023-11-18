@@ -110,7 +110,6 @@ public class BoardController {
     // 전체 게시글 검색 - 작성자 기준
     @GetMapping("/search/author/author/{board_author}")
     public ResponseEntity<List<AllBoardResponse>> getAllBoardByBoardAuthor(
-            @PathVariable Integer board_type,
             @PathVariable String board_author
     ) {
         List<AllBoardResponse> allBoardResponses = boardService.findAllBoardByBoardAuthor(board_author);
