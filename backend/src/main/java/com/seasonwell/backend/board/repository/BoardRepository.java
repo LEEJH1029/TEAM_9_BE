@@ -12,9 +12,9 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findAll();
 
-    List<Board> findAllByBoardType(Integer boardType);
+    List<Board> findAllByBoardType(String boardType);
 
-    Board findByBoardTypeAndBoardNo(Integer boardType, Long boardNo);
+    Board findByBoardTypeAndBoardNo(String boardType, Long boardNo);
 
     @Query("SELECT m FROM Board m WHERE lower(m.boardTitle) LIKE lower(concat('%', :boardTitle, '%'))")
     List<Board> findByBoardTitle(

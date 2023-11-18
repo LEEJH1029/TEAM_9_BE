@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface DiseaseService {
     List<DiseaseDto> getAllDiseases();
+    List<DiseaseDto> getRepresentDiseases();
     DiseaseDetailDto getDiseaseByCode(String diseaseCode);
     List<DiseaseDto> getDiseasesBySeason(String season);
     List<DiseaseDto> getDiseasesByNameContaining(String keyword);
