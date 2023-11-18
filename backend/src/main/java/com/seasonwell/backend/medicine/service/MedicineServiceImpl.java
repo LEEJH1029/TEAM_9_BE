@@ -68,9 +68,9 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public List<MedicineDiseaseDto> getPersonalMedicines(List<String> diseases) {
+    public List<MedicineDto> getPersonalMedicines(List<String> diseases) {
         List<Medicine> resultMedicines = getMedicinesByDiseases(diseases);
-        return converToDtoList2(resultMedicines);
+        return convertToDtoList(resultMedicines);
     }
 
     private List<Medicine> getMedicinesByDiseases(List<String> diseases) {
@@ -115,10 +115,10 @@ public class MedicineServiceImpl implements MedicineService {
     @Override
     public List<MedicineDiseaseDto> getMedicinesByDiseaseCode(String disease_code) { // 질병 별 의약품 출력
         List<Medicine> medicines = medicineRepository.findByDiseaseCode(disease_code);
-        return converToDtoList2(medicines);
+        return convertToDtoList2(medicines);
     }
 
-    private List<MedicineDiseaseDto> converToDtoList2(List<Medicine> medicineEntities) {
+    private List<MedicineDiseaseDto> convertToDtoList2(List<Medicine> medicineEntities) {
         return medicineEntities.stream()
                 .map(this::convertToDto2)
                 .collect(Collectors.toList());
