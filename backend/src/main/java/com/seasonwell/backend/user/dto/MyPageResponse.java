@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 
 @Getter
 @Setter
@@ -13,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MyPageResponse {
     private String userId;
-    private String disease_code;
+    private List<String> disease_codes;
     private String user_name;
     private String user_pw;
     private String user_tel;
@@ -24,7 +29,9 @@ public class MyPageResponse {
 
     public MyPageResponse(User user) {
         this.userId = user.getUserId();
-        this.disease_code = user.getDisease_code();
+        this.disease_codes = Optional.ofNullable(user.getDisease_code())
+                .map(codes -> Arrays.asList(codes.split(", ")))
+                .orElse(Collections.emptyList());
         this.user_name = user.getUser_name();
         this.user_pw = user.getUser_pw();
         this.user_tel = user.getUser_tel();
